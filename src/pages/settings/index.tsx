@@ -16,7 +16,7 @@ export default function Component() {
     const session = useSession();
     const user = session.data?.user;
 
-    const { data: profile } = api.user.getById.useQuery({ id: user?.id}, { enabled: user !== undefined });
+    const { data: profile } = api.user.getById.useQuery({ id: user?.id ?? ""}, { enabled: user !== undefined });
 
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
@@ -26,9 +26,9 @@ export default function Component() {
     
     useEffect(() => {
         if(!profile) return;
-        setFullName(profile.fullName);
-        setEmail(profile.email);
-        setUsername(profile.name);
+        setFullName(profile.fullName ?? "");
+        setEmail(profile.email ?? "");
+        setUsername(profile.name ?? "");
     }, [profile]);
 
     

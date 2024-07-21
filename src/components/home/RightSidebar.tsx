@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
-import { type JSX, type SVGProps } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
 
 export default function Component() {

@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import BlogCard from '~/components/user/BlogCard';
 import { Button } from '~/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 
 export default function Component() {
     const session = useSession();
@@ -34,7 +35,11 @@ export default function Component() {
                     <div className="relative -mt-16">
                         <div className="bg-white p-8 rounded-lg border">
                             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                <img src={user?.image} alt="Profile" className="w-32 h-32 rounded-full border-4 border-white" />
+                                {/* <img src={user?.image} alt="Profile" className="w-32 h-32 rounded-full border-4 border-white" /> */}
+                                <Avatar className="w-32 h-32 rounded-full border-4 border-white">
+                                    <AvatarImage src={user?.image ?? ""} />
+                                    <AvatarFallback>U</AvatarFallback>
+                                </Avatar>
                             </div>
                             <div className="absolute top-4 right-4">
                                 {user?.name == profile.name 

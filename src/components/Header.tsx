@@ -61,7 +61,7 @@ export default function Component() {
                 onClick={() => setIsAvatarOpen(!isAvatarOpen)}
               >
                 <Avatar className="w-8 h-8 rounded-full">
-                  <AvatarImage src={user.image} />
+                  <AvatarImage src={user.image ?? ''} />
                   <AvatarFallback>U</AvatarFallback>
                 </Avatar>
               </Button>

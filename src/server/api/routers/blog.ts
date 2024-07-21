@@ -36,6 +36,7 @@ export const blogRouter = createTRPCRouter({
     return ctx.db.blog.findMany({
       select: {
         id: true,
+        cover: true,
         title: true,
         slug: true,
         tags: true,
