@@ -60,7 +60,7 @@ export default function Component() {
                 className="rounded-full"
                 onClick={() => setIsAvatarOpen(!isAvatarOpen)}
               >
-                <Avatar className="w-8 h-8 rounded-full">
+                <Avatar className="w-8 h-8 rounded-full border">
                   <AvatarImage src={user.image ?? ''} />
                   <AvatarFallback>U</AvatarFallback>
                 </Avatar>
@@ -96,7 +96,7 @@ export default function Component() {
           </div>
           )}
           {!user && (
-            <Button onClick={() => void signIn()} className="hidden md:block">
+            <Button onClick={() => void signIn()}>
               Sign in
             </Button>
           )}

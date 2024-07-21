@@ -2,8 +2,10 @@
 import { useRouter } from 'next/router'
 import { api } from "~/utils/api";
 import Header from '~/components/Header';
-import ErrorPage from "next/error";
+// import ErrorPage from "next/error";
 import { CakeOutlined, ModeCommentOutlined, StickyNote2Outlined, TagOutlined } from '@mui/icons-material';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import BlogCard from '~/components/user/BlogCard';
@@ -23,7 +25,7 @@ export default function Component() {
     ])
 
     if (profile?.name == null) {
-        return <ErrorPage statusCode={404} />;
+        // return <ErrorPage statusCode={404} />;
     }
     
     return (
@@ -42,14 +44,14 @@ export default function Component() {
                                 </Avatar>
                             </div>
                             <div className="absolute top-4 right-4">
-                                {user?.name == profile.name 
+                                {user?.name == profile?.name 
                                 ? <Link href="/settings"><Button className=" px-4 py-2">Edit Profile</Button></Link>
                                 : <Button className=" px-4 py-2">Follow</Button>
                                 }
 
                             </div>
                             <div className="mt-12 text-center">
-                                <h1 className="text-3xl font-bold">{profile.name}</h1>
+                                <h1 className="text-3xl font-bold">{profile?.name ?? <Skeleton />}</h1>
                                 <p className="text-gray-600">404 bio not found</p>
                                 <div className="flex items-center justify-center text-gray-600 mt-2">
                                     <CakeOutlined />
@@ -65,11 +67,11 @@ export default function Component() {
                                 <ul className="space-y-2 text-sm text-muted-foreground">
                                     <li className="flex items-center">
                                         <StickyNote2Outlined />
-                                        <span className="ml-2">{profile.blogsCount} post published</span>
+                                        <span className="ml-2">{profile?.blogsCount ?? <Skeleton />} post published</span>
                                     </li>
                                     <li className="flex items-center">
                                         <ModeCommentOutlined />
-                                        <span className="ml-2">{profile.commentsCount} comments written</span>
+                                        <span className="ml-2">{profile?.commentsCount ?? <Skeleton />} comments written</span>
                                     </li>
                                     <li className="flex items-center">
                                         <TagOutlined />
