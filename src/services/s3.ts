@@ -1,11 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
-interface FileContent {
-  name: string;
-  type: string;
-}
-
-const uploadFile = async (key: string, fileContent: FileContent) => {
+const uploadFile = async (key: string, fileContent: File) => {
 
   // Create S3 client
   const s3Client = new S3Client({
@@ -25,7 +21,7 @@ const uploadFile = async (key: string, fileContent: FileContent) => {
     Body: fileContent,
     Bucket: "devto-clone",
     Key: key,
-    ContentType: fileContent.type
+    ContentType: fileContent?.type || ""
   };
 
 

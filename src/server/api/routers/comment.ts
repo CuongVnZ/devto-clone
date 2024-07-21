@@ -7,17 +7,15 @@ import {
 } from "~/server/api/trpc";
 
 export const commentRouter = createTRPCRouter({
-  create: protectedProcedure
-    .input(z.object({ title: z.string(), content: z.string() }))
-    .mutation(async ({ ctx, input: { title, content } }) => {
-      return ctx.db.blog.create({
-        data: { 
-          title,
-          content,
-          createdBy: { connect: { id: ctx.session.user.id } }, 
-        },
-      });
-    }),
+  // create: protectedProcedure
+  //   .input(z.object({ title: z.string(), content: z.string() }))
+  //   .mutation(async ({ ctx, input: { title, content } }) => {
+  //     return ctx.db.comment.create({
+  //       data: { 
+
+  //       },
+  //     });
+  //   }),
 
   getById: publicProcedure
     .input(z.string())
@@ -36,14 +34,6 @@ export const commentRouter = createTRPCRouter({
         include: { createdBy: true },
       });
     }),
-    
-
-  getLatest: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
-      where: { createdBy: { id: ctx.session.user.id } },
-    });
-  }),
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
