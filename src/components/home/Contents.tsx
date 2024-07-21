@@ -9,9 +9,9 @@ import BlogComponent from "~/components/home/BlogComponent";
 export default function Component() {
 
   const { data: blogs } = api.blog.getAll.useQuery();
-  if (blogs == null) {
-    return null;
-  }
+  // if (blogs == null) {
+  //   return null;
+  // }
 
   return (
     <div className="flex-grow p-4 max-w-3xl">
