@@ -39,7 +39,7 @@ export const blogRouter = createTRPCRouter({
         title: true,
         slug: true,
         tags: true,
-        createdBy: { select: { name: true, fullName: true, image: true } },
+        createdBy: { select: { id: true, name: true, fullName: true, image: true } },
         createdAt: true,
         _count: { 
           select: { 

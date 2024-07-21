@@ -13,7 +13,7 @@ type Blog = Prisma.BlogGetPayload<{
     title: true,
     slug: true,
     tags: true,
-    createdBy: { select: { name: true, fullName: true, image: true } },
+    createdBy: { select: { id: true, name: true, fullName: true, image: true } },
     createdAt: true,
     _count: { 
       select: { 
@@ -38,7 +38,8 @@ export default function Component({ blog } : { blog: Blog }) {
         )
       }
       <CardContent className="p-4">
-        <div className="flex items-center gap-2 mb-2">
+        <div className="items-center mb-2">
+        <Link className="flex gap-2" href={"/user/" + blog.createdBy.id}>
           <Avatar className="w-8 h-8 rounded-full">
             <AvatarImage src={blog.createdBy?.image ?? ""} />
             <AvatarFallback>U</AvatarFallback>
@@ -47,6 +48,7 @@ export default function Component({ blog } : { blog: Blog }) {
             <p className="text-sm font-semibold">{blog.createdBy.fullName}</p>
             <p className="text-xs text-muted-foreground">Jul 16 (10 hours ago)</p>
           </div>
+        </Link>
         </div>
         <div className="pl-10">
           <Link href={"/blog/" + blog.slug}>
