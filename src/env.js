@@ -36,7 +36,7 @@ export const env = createEnv({
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
     NEXT_PUBLIC_AWS_ACCESS_KEY_ID: z.string(),
-    NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY: z.string(), 
+    NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY: z.string(),
   },
 
   /**
