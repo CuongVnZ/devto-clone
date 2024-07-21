@@ -11,8 +11,8 @@ const uploadFile = async (key: string, fileContent: FileContent) => {
   const s3Client = new S3Client({
     region: "ap-southeast-1",
     credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "AKIATJXLVVSVWXOCZBK2",
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? "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",
+      accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID ?? "",
+      secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY ?? "",
     },
   });
 
