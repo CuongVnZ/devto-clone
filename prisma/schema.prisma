@@ -111,7 +111,7 @@ model User {
 
     // Non-Next Auth
     fullName  String?   @default("Anonymous")
-    bio       String?
+    bio       String?   @default("404 bio not found")
     blogs     Blog[]
     likes     Like[]
     comments  Comment[]

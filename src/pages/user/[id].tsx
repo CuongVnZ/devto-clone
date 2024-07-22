@@ -4,13 +4,12 @@ import { api } from "~/utils/api";
 import Header from '~/components/Header';
 // import ErrorPage from "next/error";
 import { CakeOutlined, ModeCommentOutlined, StickyNote2Outlined, TagOutlined } from '@mui/icons-material';
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import BlogCard from '~/components/user/BlogCard';
 import { Button } from '~/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
+import { Skeleton } from '@mui/material';
 
 export default function Component() {
     const session = useSession();
@@ -67,11 +66,11 @@ export default function Component() {
                                 <ul className="space-y-2 text-sm text-muted-foreground">
                                     <li className="flex items-center">
                                         <StickyNote2Outlined />
-                                        <span className="ml-2">{profile?.blogsCount ?? <Skeleton />} post published</span>
+                                        <span className="ml-2">{profile?.blogsCount ?? 0} post published</span>
                                     </li>
                                     <li className="flex items-center">
                                         <ModeCommentOutlined />
-                                        <span className="ml-2">{profile?.commentsCount ?? <Skeleton />} comments written</span>
+                                        <span className="ml-2">{profile?.commentsCount ?? 0} comments written</span>
                                     </li>
                                     <li className="flex items-center">
                                         <TagOutlined />
@@ -82,9 +81,9 @@ export default function Component() {
                         </div>
                         <div className="w-2/3">
                             {
-                                blogs?.map(blog => (
+                                blogs ? blogs.map(blog => (
                                     <BlogCard key={blog.id} blog={blog} />
-                                ))
+                                )) : <Skeleton variant="rectangular" height="100%"/>
                             }
                         </div>
                     </div>

@@ -21,18 +21,24 @@ export default function Component() {
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
+    const [image, setImage] = useState("");
     const [selectedFile, setSelectedFile] = useState<File>();
-    const [uploadPending, setUploadPending] = useState(false);
+    const [updatePending, setUpdatePending] = useState(false);
     
     useEffect(() => {
         if(!profile) return;
         setFullName(profile.fullName ?? "");
         setEmail(profile.email ?? "");
         setUsername(profile.name ?? "");
+        setImage(profile.image ?? "");
     }, [profile]);
 
     
-    const mutation = api.user.update.useMutation();
+    const mutation = api.user.update.useMutation({
+        onSuccess: () => {
+            setUpdatePending(false);
+        }
+    });
 
     if(!user) {
         return <ErrorPage statusCode={404} />;
@@ -44,15 +50,15 @@ export default function Component() {
         setSelectedFile(files[0]);
     }
 
-    const handleMutation = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        if (!fullName || !email || !username || !selectedFile) return;
-        setUploadPending(true);
-        await uploadFile(user?.id, selectedFile).then((res) => {
-            setUploadPending(false);
-            mutation.mutate({ fullName, email, name: username, image: res });
-        });
-
+    const handleMutation = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+        setUpdatePending(true);
+        if (selectedFile) {
+            await uploadFile(user?.id, selectedFile).then((res: string) => {
+                setImage(res);
+            });
+        }
+        mutation.mutate({ fullName, email, name: username, image });
     }
 
     return (
@@ -79,11 +85,11 @@ export default function Component() {
                         </li>
                     </nav>
                 </div>
-                <div className="w-1/2 p-4">
-                    <h1 className="text-2xl font-bold mb-2">@{user?.name}</h1>
+                <div className="w-1/2 p-4 flex flex-col gap-4">
+                    <h1 className="text-2xl font-bold">@{user?.name}</h1>
                     <div className="bg-white p-8 rounded-lg border">
                         <h1 className='text-2xl mb-4 font-bold'>User</h1>
-                        <form className="space-y-4" onSubmit={handleMutation}>
+                        <form className="space-y-4">
                             <div>
                                 <Label className="text-gray-700">Name</Label>
                                 <Input 
@@ -133,9 +139,41 @@ export default function Component() {
                                     />
                                 </div>
                             </div>
-                            <Button className="w-full p-2" disabled={uploadPending}>Save</Button>
                         </form>
                     </div>
+                    <div className="bg-white p-8 rounded-lg border">
+                        <h1 className='text-2xl mb-4 font-bold'>Basic</h1>
+                        <form className="space-y-4">
+                            <div>
+                                <Label className="text-gray-700">Website URL</Label>
+                                <Input 
+                                    type="text" 
+                                    placeholder="John Doe"
+                                    value={fullName}
+                                    onChange={(e) => setFullName(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <Label className="text-gray-700">Bio</Label>
+                                <Input 
+                                    type="text" 
+                                    placeholder="A short bio"
+                                    value={fullName}
+                                    onChange={(e) => setFullName(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <Label className="text-gray-700">Website URL</Label>
+                                <Input 
+                                    type="text" 
+                                    placeholder="John Doe"
+                                    value={fullName}
+                                    onChange={(e) => setFullName(e.target.value)}
+                                />
+                            </div>
+                        </form>
+                    </div>
+                    <Button className="w-full p-2" onClick={handleMutation} disabled={updatePending}>Save</Button>
                 </div>
             </main>
         </> 

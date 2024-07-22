@@ -52,6 +52,7 @@ export const userRouter = createTRPCRouter({
     .input(z.object({ fullName: z.string(), name: z.string(), email: z.string(), image: z.string() }))
     .mutation(async ({ input: { fullName, name, email, image }, ctx }) => {      
       const userId = ctx.session.user.id;
+      
       return ctx.db.user.update({
         where: { id: userId },
         data: { fullName, name, email, image },
