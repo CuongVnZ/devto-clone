@@ -49,14 +49,25 @@ export default function Component() {
                                 }
 
                             </div>
-                            <div className="mt-12 text-center">
-                                <h1 className="text-3xl font-bold">{profile?.name ?? <Skeleton />}</h1>
-                                <p className="text-gray-600">404 bio not found</p>
+                            <div className="mt-12 items-center text-center">
+                                { profile
+                                ?
+                                <>
+                                <h1 className="text-3xl font-bold">{profile?.name}</h1>
+                                <p className="text-gray-600">{"404 bio not found"}</p>
                                 <div className="flex items-center justify-center text-gray-600 mt-2">
                                     <CakeOutlined />
                                     <span>Joined on Jul 16, 2024</span>
                                     <i className="fab fa-github ml-4"></i>
                                 </div>
+                                </>
+                                :
+                                <>
+                                <Skeleton />
+                                <Skeleton />
+                                <Skeleton />
+                                </>
+                                }
                             </div>
                         </div>
                     </div>
@@ -66,15 +77,15 @@ export default function Component() {
                                 <ul className="space-y-2 text-sm text-muted-foreground">
                                     <li className="flex items-center">
                                         <StickyNote2Outlined />
-                                        <span className="ml-2">{profile?.blogsCount ?? 0} post published</span>
+                                        <span className="ml-2 text-gray-700">{profile?._count.blogs ?? 0} post published</span>
                                     </li>
                                     <li className="flex items-center">
                                         <ModeCommentOutlined />
-                                        <span className="ml-2">{profile?.commentsCount ?? 0} comments written</span>
+                                        <span className="ml-2 text-gray-700">{profile?._count.comments ?? 0} comments written</span>
                                     </li>
                                     <li className="flex items-center">
                                         <TagOutlined />
-                                        <span className="ml-2">11 tags followed</span>
+                                        <span className="ml-2 text-gray-700">11 tags followed</span>
                                     </li>
                                 </ul>
                             </div>

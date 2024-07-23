@@ -22,6 +22,10 @@ export default function Component() {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [image, setImage] = useState("");
+    const [website, setWebsite] = useState("");
+    const [location, setLocation] = useState("");
+    const [bio, setBio] = useState("");
+
     const [selectedFile, setSelectedFile] = useState<File>();
     const [updatePending, setUpdatePending] = useState(false);
     
@@ -31,6 +35,9 @@ export default function Component() {
         setEmail(profile.email ?? "");
         setUsername(profile.name ?? "");
         setImage(profile.image ?? "");
+        setWebsite(profile.website ?? "");
+        setLocation(profile.location ?? "");
+        setBio(profile.bio ?? "");
     }, [profile]);
 
     
@@ -148,8 +155,17 @@ export default function Component() {
                                 <Label className="text-gray-700">Website URL</Label>
                                 <Input 
                                     type="text" 
-                                    placeholder="John Doe"
-                                    value={fullName}
+                                    placeholder="www.example.com"
+                                    value={website}
+                                    onChange={(e) => setFullName(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <Label className="text-gray-700">Location</Label>
+                                <Input 
+                                    type="text" 
+                                    placeholder="A short bio"
+                                    value={location}
                                     onChange={(e) => setFullName(e.target.value)}
                                 />
                             </div>
@@ -157,17 +173,8 @@ export default function Component() {
                                 <Label className="text-gray-700">Bio</Label>
                                 <Input 
                                     type="text" 
-                                    placeholder="A short bio"
-                                    value={fullName}
-                                    onChange={(e) => setFullName(e.target.value)}
-                                />
-                            </div>
-                            <div>
-                                <Label className="text-gray-700">Website URL</Label>
-                                <Input 
-                                    type="text" 
-                                    placeholder="John Doe"
-                                    value={fullName}
+                                    placeholder="404 bio not found"
+                                    value={bio}
                                     onChange={(e) => setFullName(e.target.value)}
                                 />
                             </div>

@@ -26,7 +26,7 @@ export default function Component() {
                 <span className="sr-only">DEV</span>
               </div>
             </Link>
-            <div className="relative w-1/2 hidden md:block">
+            <div className="relative w-2/3 hidden md:block">
               <Input type="search" placeholder="Search..." className="pl-10 w-full" />
               <SearchIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
             </div>

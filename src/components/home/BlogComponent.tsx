@@ -38,7 +38,7 @@ export default function Component({ blog } : { blog: Blog }) {
         )
       }
       <CardContent className="p-4">
-        <div className="items-center mb-2">
+        <div className="items-center mb-4">
         <Link className="flex gap-2" href={"/user/" + blog.createdBy.id}>
           <Avatar className="w-8 h-8 rounded-full">
             <AvatarImage src={blog.createdBy?.image ?? ""} />
@@ -52,9 +52,9 @@ export default function Component({ blog } : { blog: Blog }) {
         </div>
         <div className="pl-10">
           <Link href={"/blog/" + blog.slug}>
-            <span className="text-xl font-bold mb-2">{blog.title}</span>
+            <span className="text-xl font-bold hover:text-indigo-700">{blog.title}</span>
           </Link>
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mt-2 mb-4">
             <span className="text-sm text-muted-foreground">#webdev</span>
             <span className="text-sm text-muted-foreground">#python</span>
             <span className="text-sm text-muted-foreground">#programming</span>

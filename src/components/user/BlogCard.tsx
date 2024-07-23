@@ -18,13 +18,13 @@ export default function Component({blog}: {blog: Blog}) {
                   <AvatarFallback>U</AvatarFallback>
               </Avatar>
               <div>
-                  <p className="text-sm font-semibold">{blog.createdBy.name}</p>
+                  <p className="text-sm font-semibold">{blog.createdBy.fullName}</p>
                   <p className="text-xs text-muted-foreground">Jul 16 (10 hours ago)</p>
               </div>
           </div>
           <div className="pl-10">
               <Link href={"/blog/" + blog.slug}>
-                  <span className="text-xl font-bold mb-2">{blog.title}</span>
+                  <span className="text-xl font-bold mb-2 hover:text-indigo-700">{blog.title}</span>
               </Link>
               <div className="flex flex-wrap gap-2 mb-4">
                   <span className="text-sm text-muted-foreground">#webdev</span>
@@ -34,7 +34,7 @@ export default function Component({blog}: {blog: Blog}) {
               </div>
               <div className="flex justify-between items-center text-muted-foreground">
                   <div className="flex items-center gap-2">
-                      <span className="text-sm">❤️‍🔥🤖🎶🤹</span>
+                      <span className="text-sm">❤️‍🔥</span>
                       <span className="text-sm pr-5">22 Reactions</span>
                       <ModeCommentOutlined />
                       <span className="text-sm">1 Comment</span>

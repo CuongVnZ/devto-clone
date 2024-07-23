@@ -59,7 +59,7 @@ model Blog {
     cover       String    @default("")
     title       String
     content     String
-    tags        String    @default("[]")
+    tags        String[]  @default([])
     status      String    @default("draft")
     comments    Comment[]
     likes       Like[]
@@ -111,6 +111,8 @@ model User {
 
     // Non-Next Auth
     fullName  String?   @default("Anonymous")
+    website   String?   @default("")
+    location  String?   @default("")
     bio       String?   @default("404 bio not found")
     blogs     Blog[]
     likes     Like[]

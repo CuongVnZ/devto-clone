@@ -18,6 +18,9 @@ export const userRouter = createTRPCRouter({
         where: { id },
         select: {
           fullName: true,
+          website: true,
+          location: true,
+          bio: true,
           name: true,
           email: true,
           image: true,
@@ -29,21 +32,14 @@ export const userRouter = createTRPCRouter({
               comments: true,
             } 
           },
-          followers: currentUserId == null ? undefined : { where: { id: currentUserId } },
+          followers: currentUserId == null ? undefined : { where: { id: currentUserId } }, // check if current user is following this user
         },
       });
 
       if (profile == null) return;
 
       return {
-        fullName: profile.fullName,
-        name: profile.name,
-        email: profile.email,
-        image: profile.image,
-        followersCount: profile._count.followers,
-        followsCount: profile._count.follows,
-        blogsCount: profile._count.blogs,
-        commentsCount: profile._count.comments,
+        ...profile,
         isFollowing: profile.followers.length > 0,
       };
     }),
