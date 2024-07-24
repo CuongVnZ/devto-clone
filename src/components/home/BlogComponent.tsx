@@ -33,7 +33,7 @@ export default function Component({ blog } : { blog: Blog }) {
           <img 
             src={blog.cover} 
             alt="Cover Image"
-            className="w-full min-h-60 object-cover" 
+            className="w-full max-h-60 object-cover" 
           />
         )
       }

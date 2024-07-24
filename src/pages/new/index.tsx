@@ -55,6 +55,7 @@ export default function Component() {
         setPending(true);
         let cover = "";
         if (selectedFile) {
+            const ext = selectedFile.name.split('.').pop();
             cover = "https://devto-clone.s3.amazonaws.com/cover/" + selectedFile.name;
         }
         mutation.mutate({ title, content, tags, cover });
