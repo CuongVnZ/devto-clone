@@ -198,7 +198,7 @@ export default function Component() {
       <div className="bg-white rounded-b-lg border border-gray-200 p-4">
         <div className="flex items-start mb-2">
           <Avatar className="w-12 h-12 rounded-full -mt-8">
-            <AvatarImage src={blog?.createdBy.image}/>
+            <AvatarImage src={blog?.createdBy.image ?? ""}/>
             <AvatarFallback>{blog?.createdBy.name}</AvatarFallback>
           </Avatar>
           <h2 className="text-xl font-bold -mt-2 ml-2">{blog?.createdBy.name}</h2>
