@@ -11,6 +11,7 @@ import { Label } from '~/components/ui/label';
 import { Checkbox } from '~/components/ui/checkbox';
 import { uploadFile } from '~/services/s3';
 import { AccountBoxOutlined, ManageAccounts, NotificationsNone, Tune } from '@mui/icons-material';
+import { Snackbar } from '@mui/material';
 
 export default function Component() {
     const session = useSession();
@@ -28,6 +29,16 @@ export default function Component() {
 
     const [selectedFile, setSelectedFile] = useState<File>();
     const [updatePending, setUpdatePending] = useState(false);
+
+    const [notification, setNotification] = useState(false);
+  
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setNotification(false);
+    };
     
     useEffect(() => {
         if(!profile) return;
@@ -44,6 +55,7 @@ export default function Component() {
     const mutation = api.user.update.useMutation({
         onSuccess: () => {
             setUpdatePending(false);
+            setNotification(true);
         }
     });
 
@@ -183,6 +195,12 @@ export default function Component() {
                     <Button className="w-full p-2" onClick={handleMutation} disabled={updatePending}>Save</Button>
                 </div>
             </main>
+            <Snackbar
+                open={notification}
+                autoHideDuration={3000}
+                onClose={handleClose}
+                message="Your data has been saved!"
+            />
         </> 
     );
 }

@@ -52,43 +52,46 @@ export default function Component({ blog } : { blog: Blog }) {
         </div>
         <div className="pl-10">
           <Link href={"/blog/" + blog.slug}>
-            <span className="text-xl font-bold hover:text-indigo-700">{blog.title}</span>
+            <span className="text-2xl font-bold hover:text-indigo-700">{blog.title}</span>
           </Link>
-          <div className="flex flex-wrap gap-2 mt-2 mb-4">
-            <span className="text-sm text-muted-foreground">#webdev</span>
-            <span className="text-sm text-muted-foreground">#python</span>
-            <span className="text-sm text-muted-foreground">#programming</span>
-            <span className="text-sm text-muted-foreground">#ai</span>
+          <div className="flex flex-wrap gap-4 mt-2 mb-4 text-gray-700">
+            <span className="text-sm">#webdev</span>
+            <span className="text-sm">#python</span>
+            <span className="text-sm">#programming</span>
+            <span className="text-sm">#ai</span>
           </div>
-          <div className="flex justify-between items-center text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <span className="text-sm">❤️‍🔥🤖🎶🤹</span>
-              <span className="text-sm pr-5">22 Reactions</span>
+          <div className="flex justify-between items-center text-gray-700">
+            <div className="flex items-center gap-2 text-sm">
+              <span className="">❤️‍🔥</span>
+              <span className="pr-5">22 Reactions</span>
               <ModeCommentOutlined />
-              <span className="text-sm">{blog._count.comments} {blog._count.comments > 0 ? "Comments" : "Comment"}</span>
+              <span className="">{blog._count.comments} {blog._count.comments > 0 ? "Comments" : "Comment"}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-sm">4 min read</span>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="">4 min read</span>
               <BookmarkBorderOutlined className="" />
             </div>
           </div>
         </div>
           
-        <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-          <div className="flex items-center gap-2 mb-2">
-            <Avatar className="w-8 h-8 rounded-full">
-              <AvatarImage src="https://i.pravatar.cc/50?u=commenter" />
-              <AvatarFallback>F</AvatarFallback>
-            </Avatar>
-            <div>
-              <p className="text-sm font-semibold">Florian Rappl</p>
-              <p className="text-xs text-muted-foreground">2 hours ago</p>
+        <div className="flex mt-4">
+          <Avatar className="w-8 h-8 rounded-full">
+            <AvatarImage src="https://i.pravatar.cc/50?u=commenter" />
+            <AvatarFallback>F</AvatarFallback>
+          </Avatar>
+          <div className="ml-2 p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="flex justify-center items-center">
+                <p className="text-sm font-semibold">Florian Rappl</p>
+                <p className="text-sm text-muted-foreground ml-2">2 hours ago</p>
+              </div>
             </div>
+            <p className="text-sm">
+              While the micro scheme is fine, it lacks a proper repository structuring. As an example, not aggregating the source code in a <code>src</code> directory is a huge misstep. You might want to use TypeScript or some other tooling (e.g., a bundler) to process your code for performance benefits.
+            </p>
           </div>
-          <p className="text-sm">
-            While the micro scheme is fine, it lacks a proper repository structuring. As an example, not aggregating the source code in a <code>src</code> directory is a huge misstep. You might want to use TypeScript or some other tooling (e.g., a bundler) to process your code for performance benefits.
-          </p>
         </div>
+
       </CardContent>
     </Card>
         </>

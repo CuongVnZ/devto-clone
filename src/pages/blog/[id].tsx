@@ -1,14 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
-import { BookmarkBorderOutlined, FavoriteBorderOutlined, ModeCommentOutlined } from '@mui/icons-material';
+import { BookmarkBorderOutlined, CommentOutlined, FavoriteBorderOutlined, ModeCommentOutlined } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import Header from '~/components/Header';
 import { api } from "~/utils/api";
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
-import { Skeleton } from '@mui/material';
+import { Button, Skeleton } from '@mui/material';
 import { useSession } from 'next-auth/react';
 
 import { MdPreview, MdCatalog } from 'md-editor-rt';
 import 'md-editor-rt/lib/preview.css';
+import { useEffect, useState } from 'react';
 
 export default function Component() {
     const session = useSession();
@@ -16,12 +17,18 @@ export default function Component() {
 
     const router = useRouter();
     const id = router.query.id as string;
+    
 
-    const { data: blog } = api.blog.getById.useQuery(id);
+    const { data: blog, isSuccess } = api.blog.getById.useQuery(id);
 
-    if (blog == null) {
-        // return <ErrorPage statusCode={404} />;
-    }
+    const [date, setDate] = useState("July 16")
+
+    useEffect(() => {
+        if (blog && isSuccess) {
+            const tmp = new Date(blog.createdAt)
+            setDate(tmp.toDateString())
+        }
+    }, [blog, isSuccess])
 
     return (
         <>
@@ -49,7 +56,7 @@ export default function Component() {
 
                         {/* Main Content */}
                         <div className="flex-grow w-8/12 ml-16">
-                            <div className="bg-white rounded-lg border">
+                            <div className="bg-white rounded-lg border mt-2">
                                 <div className='px-12 pt-12'>                                    
                                     <div className="flex items-center mb-4 justify-between">
                                         <div className='flex'>
@@ -60,12 +67,13 @@ export default function Component() {
                                             <div className="ml-2">
                                                 <h2 className="text-md font-semibold">{blog?.createdBy.fullName ?? <Skeleton width={64}/>}</h2>
                                                 <p className="text-gray-600 text-sm">
-                                                    {blog?.createdBy.name ? "Posted on Jul 16" : <Skeleton width={128}/>}
+                                                    {blog?.createdBy.name ? date : <Skeleton width={128}/>}
                                                 </p>
                                             </div>
                                         </div>
                                         {
-                                        user?.id === blog?.createdBy.id ? (
+                                        user?.id === blog?.createdBy.id ??
+                                        <>
                                         <div className='flex'>
                                             <div className="flex ml-2 bg-amber-50 p-1 border border-amber-100 rounded-lg text-gray-700">
                                                 <button className="text-sm hover:bg-gray-400 hover:bg-opacity-20 p-2 rounded-sm">
@@ -79,7 +87,7 @@ export default function Component() {
                                                 </button>
                                             </div>
                                         </div>
-                                        ) : <Skeleton width={150}/>
+                                        </>
                                         }
                                     </div>
                                     <div className="flex space-x-2 mb-4">
@@ -122,31 +130,48 @@ export default function Component() {
                                     <Skeleton variant='rectangular' height="40vh"/>}
                                 </div>
                                 {/* Comment Section */}
-                                <div className="bg-white mt-4 border-t p-6">
-                                    <h2 className="text-xl font-semibold my-6">Top comments (2)</h2>
+                                <div className="bg-white mt-2 border-t px-12">
+                                    <h2 className="text-xl font-semibold mt-12 mb-8">Top comments (2)</h2>
                                     <div className="mb-4 flex items-center">
                                         <Avatar className="w-8 h-8 rounded-full">
-                                            <AvatarImage src={blog?.createdBy.image ?? ""}/>
+                                            <AvatarImage src={user?.image ?? ""}/>
                                             <AvatarFallback>U</AvatarFallback>
                                         </Avatar>
                                         <input type="text" placeholder="Add to the discussion" className="w-full p-2 border rounded-md ml-2"/>
                                     </div>
-                                    <div className="space-y-4">
+                                    <div className="space-y-8">
+                                        <div className='flex'>
+                                            <Avatar className="w-8 h-8 rounded-full">
+                                                <AvatarImage src={blog?.createdBy.image ?? ""} />
+                                                <AvatarFallback>U</AvatarFallback>
+                                            </Avatar>
+                                            <div className='flex flex-col ml-2 w-full gap-2'>
+                                            <div className='border p-2 rounded-md w-full'>
+                                                <p className="font-semibold">Chibueze Onyekpere <span className="text-gray-600 text-sm">Jul 21</span></p>
+                                                <p className="text-gray-800">I really love this Google IDX concept. Great article</p>
+                                            </div>
+                                            <div className='flex text-xs items-center gap-4 text-gray-700'>
+                                                <div className=''>
+                                                    <FavoriteBorderOutlined className='size-5'/>
+                                                    <span className="ml-1">2 likes</span>
+                                                </div>
+                                                <div className=''>
+                                                    <ModeCommentOutlined className='size-5'/>
+                                                    <span className="ml-1">Reply</span>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
                                         <div className='flex'>
                                             <Avatar className="w-8 h-8 rounded-full">
                                                 <AvatarImage src={blog?.createdBy.image ?? ""} />
                                                 <AvatarFallback>U</AvatarFallback>
                                             </Avatar>
                                             <div className='border p-2 rounded-md ml-2 w-full'>
-                                                <p className="font-semibold">Chibueze Onyekpere <span className="text-gray-600 text-sm">Jul 21</span></p>
-                                                <p className="text-gray-800">I really love this Google IDX concept. Great article</p>
+                                                <p className="font-semibold">Chi Cuong Nguyen <span className="text-gray-600 text-sm">Jul 22</span></p>
+                                                <p className="text-gray-800 my-2">Thanks for the Appreciation Bro ✨</p>
                                                 <p className="text-gray-600 text-sm">2 likes <span className="ml-2">Reply</span></p>
                                             </div>
-                                        </div>
-                                        <div className='border p-2 rounded-md'>
-                                            <p className="font-semibold">Sh Raj <span className="text-gray-600 text-sm">Jul 22</span></p>
-                                            <p className="text-gray-800">Thanks for the Appreciation Bro ✨</p>
-                                            <p className="text-gray-600 text-sm">1 like <span className="ml-2">Reply</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +181,7 @@ export default function Component() {
 
                         {/* Right Sidebar */}
                         <div className="hidden md:block w-96 p-2">
-                            <div className="bg-white p-6 rounded-lg border mb-6">
+                            {/* <div className="bg-white p-6 rounded-lg border mb-6">
                                 <div className="flex items-center mb-2">
                                     <Avatar className="w-8 h-8 rounded-full">
                                         <AvatarImage src={blog?.createdBy.image ?? ""} />
@@ -167,7 +192,38 @@ export default function Component() {
                                 <p className="text-gray-600 text-sm">{blog?.createdBy.bio ?? <Skeleton />}</p>
                                 <p className="text-gray-800 text-sm font-bold mt-2">Joined</p>
                                 <p className="text-gray-600 text-sm">Jan 9, 2022</p>
-                            </div>
+                            </div> */}
+    <div className="w-full max-w-md">
+      <div className="bg-black h-8 rounded-t-lg"></div>
+      <div className="bg-white rounded-b-lg border border-gray-200 p-4">
+        <div className="flex items-start mb-2">
+          <Avatar className="w-12 h-12 rounded-full -mt-8">
+            <AvatarImage src={blog?.createdBy.image}/>
+            <AvatarFallback>{blog?.createdBy.name}</AvatarFallback>
+          </Avatar>
+          <h2 className="text-xl font-bold -mt-2 ml-2">{blog?.createdBy.name}</h2>
+        </div>
+          <Button className="bg-blue-600 text-white hover:bg-blue-700 w-full">
+            Follow
+          </Button>
+        <p className="text-sm text-gray-600 my-4">{blog?.createdBy.bio ?? "404 bio not found"}</p>
+        
+        <div className="space-y-2">
+          <div>
+            <h3 className="text-xs font-semibold text-gray-700">EDUCATION</h3>
+            <p className="text-xs text-gray-600">loading</p>
+          </div>
+          <div>
+            <h3 className="text-xs font-semibold text-gray-700">WORK</h3>
+            <p className="text-xs text-gray-600">loading</p>
+          </div>
+          <div>
+            <h3 className="text-xs font-semibold text-gray-700">JOINED</h3>
+            <p className="text-xs text-gray-600">loading</p>
+          </div>
+        </div>
+      </div>
+    </div>
                             <div className="bg-white p-6 rounded-lg border">
                                 <h2 className="text-xl font-semibold mb-4 border-b">
                                     More from <span className='text-indigo-700'>{blog?.createdBy.name ?? <Skeleton />}</span>

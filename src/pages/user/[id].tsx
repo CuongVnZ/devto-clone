@@ -32,11 +32,11 @@ export default function Component() {
             <Header />
             <div className="bg-gray-100 min-h-screen pt-14">
                 <div className="bg-black h-36"></div>
-                <div className="max-w-4xl mx-auto container">
+                {/* Profile section */}
+                <div className="w-[80%] mx-auto container">
                     <div className="relative -mt-16">
-                        <div className="bg-white p-8 rounded-lg border">
+                        <div className="bg-white p-8 rounded-lg border h-60">
                             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                {/* <img src={user?.image} alt="Profile" className="w-32 h-32 rounded-full border-4 border-white" /> */}
                                 <Avatar className="w-32 h-32 rounded-full border-4 border-white">
                                     <AvatarImage src={user?.image ?? ""} />
                                     <AvatarFallback>U</AvatarFallback>
@@ -49,16 +49,15 @@ export default function Component() {
                                 }
 
                             </div>
-                            <div className="mt-12 items-center text-center">
+                            <div className="mt-16 items-center text-center">
                                 { profile
                                 ?
                                 <>
                                 <h1 className="text-3xl font-bold">{profile?.name}</h1>
-                                <p className="text-gray-600">{"404 bio not found"}</p>
-                                <div className="flex items-center justify-center text-gray-600 mt-2">
+                                <p className="text-gray-700 mt-2">{"404 bio not found"}</p>
+                                <div className="flex items-center justify-center text-gray-500 mt-8">
                                     <CakeOutlined />
-                                    <span>Joined on Jul 16, 2024</span>
-                                    <i className="fab fa-github ml-4"></i>
+                                    <span className='text-sm'>Joined on Jul 16, 2024</span>
                                 </div>
                                 </>
                                 :

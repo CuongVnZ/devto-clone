@@ -22,7 +22,8 @@ export default function Component() {
           <div className="flex items-center gap-4 w-full">
             <Link href={"/"} passHref>
               <div className="flex items-center gap-2">
-                <DiscIcon className="w-8 h-8" />
+                {/* <DiscIcon className="w-8 h-8" /> */}
+                <img src="/devto.png" className="w-12 h-10"/ >
                 <span className="sr-only">DEV</span>
               </div>
             </Link>
