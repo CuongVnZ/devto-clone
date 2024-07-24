@@ -63,9 +63,9 @@ export default function Component({ blog } : { blog: Blog }) {
           <div className="flex justify-between items-center text-gray-700">
             <div className="flex items-center gap-2 text-sm">
               <span className="">❤️‍🔥</span>
-              <span className="pr-5">22 Reactions</span>
+              <span className="flex gap-1 pr-5">22 <span className="hidden md:block">Reactions</span></span>
               <ModeCommentOutlined />
-              <span className="">{blog._count.comments} {blog._count.comments > 0 ? "Comments" : "Comment"}</span>
+              <span className="flex gap-1">{blog._count.comments} {blog._count.comments > 0 ? <span className="hidden md:block">Comments</span> : <span className="hidden md:block">Comment</span>}</span>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <span className="">4 min read</span>

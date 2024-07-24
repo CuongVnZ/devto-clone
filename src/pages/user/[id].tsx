@@ -38,7 +38,7 @@ export default function Component() {
                         <div className="bg-white p-8 rounded-lg border h-60">
                             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                                 <Avatar className="w-32 h-32 rounded-full border-4 border-white">
-                                    <AvatarImage src={user?.image ?? ""} />
+                                    <AvatarImage src={profile?.image ?? ""} />
                                     <AvatarFallback>U</AvatarFallback>
                                 </Avatar>
                             </div>
@@ -53,7 +53,7 @@ export default function Component() {
                                 { profile
                                 ?
                                 <>
-                                <h1 className="text-3xl font-bold">{profile?.name}</h1>
+                                <h1 className="text-3xl font-bold">{profile?.fullName}</h1>
                                 <p className="text-gray-700 mt-2">{"404 bio not found"}</p>
                                 <div className="flex items-center justify-center text-gray-500 mt-8">
                                     <CakeOutlined />

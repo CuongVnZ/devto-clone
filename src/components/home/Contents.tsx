@@ -15,8 +15,8 @@ export default function Component() {
   // }
 
   return (
-    <div className="flex-grow p-4 w-3/5">
-    <Card className="col-span-1 bg-white border rounded-lg overflow-hidden mb-6">
+    <div className="flex-grow py-4 mx-2 w-8/12">
+    <Card className="col-span-1 bg-white border shadow-sm rounded-lg overflow-hidden mb-6">
       <img 
         src="https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fnuy8zc5v6fsfl2ehi4g8.gif" 
         alt="Cover Image"

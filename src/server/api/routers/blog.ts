@@ -9,10 +9,10 @@ import {
 
 export const blogRouter = createTRPCRouter({
   create: protectedProcedure
-    .input(z.object({ title: z.string(), content: z.string() }))
-    .mutation(async ({ ctx, input: { title, content } }) => {
+    .input(z.object({ title: z.string(), content: z.string(), tags: z.array(z.string()), cover: z.string() }))
+    .mutation(async ({ ctx, input: { title, content, tags, cover } }) => {
       // regenerate slug if title is changed
-      let slug = slugify(title);
+      let slug = slugify(title.toLowerCase());
       // check if slug is unique
       const existingBlog = await ctx.db.blog.findFirst({ where: { slug } });
       if (existingBlog) {
@@ -24,6 +24,8 @@ export const blogRouter = createTRPCRouter({
       return ctx.db.blog.create({
         data: { 
           title,
+          tags,
+          cover,
           content,
           slug,
           createdBy: { connect: { id: ctx.session.user.id } }, 

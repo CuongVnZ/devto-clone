@@ -42,14 +42,14 @@ model Like {
 }
 
 model Comment {
-    id        String   @id @default(uuid())
-    userId    String
-    blogId    String
-    content   String
-    createdAt DateTime @default(now())
+    id          String   @id @default(uuid())
+    createdById String
+    blogId      String
+    content     String
+    createdAt   DateTime @default(now())
 
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-    blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+    createdBy User @relation(fields: [createdById], references: [id], onDelete: Cascade)
+    blog      Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
 }
 
 model Blog {
@@ -119,6 +119,8 @@ model User {
     comments  Comment[]
     followers User[]    @relation(name: "Followers")
     follows   User[]    @relation(name: "Followers")
+
+    createdAt DateTime @default(now())
 }
 
 model VerificationToken {

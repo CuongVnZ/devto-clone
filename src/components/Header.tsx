@@ -16,9 +16,9 @@ export default function Component() {
   const user = session.data?.user;
 
   return (
-    <header className="fixed w-full bg-white border-b z-50">
+    <header className="fixed w-full bg-white border-b shadow-sm z-50">
       <div className="md:container">
-        <div className="px-4 flex items-center justify-between h-14">
+        <div className="px-2 flex items-center justify-between h-14">
           <div className="flex items-center gap-4 w-full">
             <Link href={"/"} passHref>
               <div className="flex items-center gap-2">
@@ -36,7 +36,7 @@ export default function Component() {
           {user && (
           <div className="flex items-center gap-2">
             <Link href={"/new"} passHref>
-              <Button className="hidden md:block">Create Post</Button>
+              <Button variant="outline" className="hidden md:block">Create Post</Button>
             </Link>
             <div className="relative">
               <Button

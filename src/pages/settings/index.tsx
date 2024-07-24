@@ -9,7 +9,7 @@ import { Input } from '~/components/ui/input';
 import { Button } from "~/components/ui/button";
 import { Label } from '~/components/ui/label';
 import { Checkbox } from '~/components/ui/checkbox';
-import { uploadFile } from '~/services/s3';
+import { uploadAvatar } from '~/services/s3';
 import { AccountBoxOutlined, ManageAccounts, NotificationsNone, Tune } from '@mui/icons-material';
 import { Snackbar } from '@mui/material';
 
@@ -73,9 +73,9 @@ export default function Component() {
         e.preventDefault();
         setUpdatePending(true);
         if (selectedFile) {
-            await uploadFile(user?.id, selectedFile).then((res: string) => {
-                setImage(res);
-            });
+            const res = await uploadAvatar(user?.id, selectedFile);
+            setImage(res);
+            setSelectedFile(undefined); // avoid re-upload
         }
         mutation.mutate({ fullName, email, name: username, image });
     }
@@ -176,7 +176,7 @@ export default function Component() {
                                 <Label className="text-gray-700">Location</Label>
                                 <Input 
                                     type="text" 
-                                    placeholder="A short bio"
+                                    placeholder="Australia"
                                     value={location}
                                     onChange={(e) => setFullName(e.target.value)}
                                 />
