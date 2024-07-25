@@ -7,15 +7,17 @@ import {
 } from "~/server/api/trpc";
 
 export const commentRouter = createTRPCRouter({
-  // create: protectedProcedure
-  //   .input(z.object({ title: z.string(), content: z.string() }))
-  //   .mutation(async ({ ctx, input: { title, content } }) => {
-  //     return ctx.db.comment.create({
-  //       data: { 
-
-  //       },
-  //     });
-  //   }),
+  create: protectedProcedure
+    .input(z.object({ blogId: z.string(), content: z.string() }))
+    .mutation(async ({ ctx, input: { blogId, content } }) => {
+      return ctx.db.comment.create({
+        data: {
+          content,
+          blog: { connect: { id: blogId } },
+          createdBy: { connect: { id: ctx.session.user.id } },
+        },
+      });
+    }),
 
   getById: publicProcedure
     .input(z.string())
