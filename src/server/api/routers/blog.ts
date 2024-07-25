@@ -61,6 +61,7 @@ export const blogRouter = createTRPCRouter({
       include: {
         comments: {
           include: { createdBy: true }
+
         },
         _count: {
           select: { 
@@ -73,21 +74,12 @@ export const blogRouter = createTRPCRouter({
     });
   }),
   
-  getById: protectedProcedure
+  getById: publicProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
       console.log("input", input);
       return ctx.db.blog.findUnique({
-        where: { id: input },
-        include: {
-          _count: {
-            select: { 
-              likes: true,
-              comments: true,
-            }
-          },
-          createdBy: true 
-        },
+        where: { id: input }
       });
     }),
 

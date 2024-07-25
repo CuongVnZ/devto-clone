@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
-import { BookmarkBorderOutlined, ModeCommentOutlined } from '@mui/icons-material';
+import { ModeCommentOutlined } from '@mui/icons-material';
 import { type Prisma } from '@prisma/client'
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
@@ -24,24 +23,22 @@ export default function Component({blog}: {blog: Blog}) {
           </div>
           <div className="pl-10">
               <Link href={"/blog/" + blog.slug}>
-                  <span className="text-xl font-bold mb-2 hover:text-indigo-700">{blog.title}</span>
+                  <span className="text-xl font-bold hover:text-indigo-700">{blog.title}</span>
               </Link>
-              <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-sm text-muted-foreground">#webdev</span>
-                  <span className="text-sm text-muted-foreground">#python</span>
-                  <span className="text-sm text-muted-foreground">#programming</span>
-                  <span className="text-sm text-muted-foreground">#ai</span>
+              <div className="flex flex-wrap gap-2 my-2">
+                    {blog.tags.map(tag => (
+                        <span key={tag} className="text-sm text-muted-foreground">#{tag}</span>
+                    ))}
               </div>
               <div className="flex justify-between items-center text-muted-foreground">
                   <div className="flex items-center gap-2">
                       <span className="text-sm">❤️‍🔥</span>
-                      <span className="text-sm pr-5">22 Reactions</span>
+                      <span className="text-sm pr-5">5 Reactions</span>
                       <ModeCommentOutlined />
-                      <span className="text-sm">1 Comment</span>
+                      <span className="text-sm flex gap-1">1 <span className='hidden md:block'>Comment</span></span>
                   </div>
                   <div className="flex items-center gap-2">
                       <span className="text-sm">4 min read</span>
-                      <BookmarkBorderOutlined />
                   </div>
               </div>
           </div>

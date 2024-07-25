@@ -82,7 +82,7 @@ export default function Component() {
                         {/* Main Content */}
                         <div className="flex-grow w-9/12 md:ml-16">
                             <div className="bg-white rounded-lg border mt-2">
-                                {blog && <img src={"https://devto-clone.s3.amazonaws.com/cover/" + blog.id + "." + blog.coverExtension} alt="Cover Image" className="w-full h-72 object-cover rounded-t-lg" />}
+                                {blog?.coverExtension && <img src={"https://devto-clone.s3.amazonaws.com/cover/" + blog.id + "." + blog.coverExtension} alt="Cover Image" className="w-full h-72 object-cover rounded-t-lg" />}
                                 <div className='px-12 pt-8'>                                    
                                     <div className="flex items-center mb-4 justify-between">
                                         <div className='flex'>
@@ -181,7 +181,7 @@ export default function Component() {
                                         {blog?.comments.map((comment) => (
                                             <Comment
                                                 key={comment.id}
-                                                author={{name: comment.createdBy.fullName ?? "", image: comment.createdBy.image ?? ""}}
+                                                author={comment.createdBy}
                                                 date={new Date(comment.createdAt).toLocaleDateString()}
                                                 content={comment.content}
                                                 likes={0}
@@ -226,7 +226,7 @@ export default function Component() {
                                         <AvatarFallback>{blog?.createdBy.name}</AvatarFallback>
                                     </Avatar>
                                     <Link href={"/user/" + blog?.createdBy.id} passHref>
-                                    <h2 className="text-xl font-bold -mt-2 ml-2 hover:text-indigo-700">{blog?.createdBy.name}</h2>
+                                    <h2 className="text-xl font-bold -mt-2 ml-2 hover:text-indigo-700">{blog?.createdBy.fullName}</h2>
                                     </Link>
                                     </div>
                                     <Button className="bg-indigo-600 text-white hover:bg-indigo-700 w-full">
@@ -252,7 +252,7 @@ export default function Component() {
                             </div>
                             <div className="bg-white p-6 rounded-lg border">
                                 <h2 className="text-xl font-semibold mb-4 border-b">
-                                    More from <span className='text-indigo-700'>{blog?.createdBy.name ?? <Skeleton />}</span>
+                                    More from <span className='text-indigo-700'>{blog?.createdBy.fullName ?? <Skeleton />}</span>
                                 </h2>
                                 <ul className="space-y-2">
                                     <li>
