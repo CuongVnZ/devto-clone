@@ -12,6 +12,18 @@ import 'md-editor-rt/lib/preview.css';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '~/components/ui/button';
+import Comment from '~/components/blog/Comment';
+
+interface CommentType {
+    id: string;
+    content: string;
+    createdAt: Date;
+    author: {
+        name: string;
+        image: string;
+    };
+    likes: number;
+}
 
 export default function Component() {
     const session = useSession();
@@ -21,11 +33,10 @@ export default function Component() {
     const id = router.query.id as string;
     
     const commentMutation = api.comment.create.useMutation();
-    const { data: blog, isSuccess } = api.blog.getBySlug.useQuery(id);
+    const { data: blog, isSuccess, refetch: refetchBlog } = api.blog.getBySlug.useQuery(id);
 
     const [date, setDate] = useState("July 16")
     const [comment, setComment] = useState("")
-    const [comments, setComments] = useState([])
 
     useEffect(() => {
         if (blog && isSuccess) {
@@ -34,13 +45,15 @@ export default function Component() {
         }
     }, [blog, isSuccess])
 
-    const handleComment = () => {
+
+    const handleComment = async () => {
         if (blog && comment.length > 0) {
-            const res = commentMutation.mutate({ content: comment, blogId: blog.id })
-            // setComments([...comments, res])
-            setComment("")
+            await commentMutation.mutateAsync({ content: comment, blogId: blog.id });
+            setComment("");
+            await refetchBlog();
         }
-    }
+    };
+
 
     return (
         <>
@@ -165,28 +178,15 @@ export default function Component() {
                                         </div>
                                     </div>
                                     <div className="space-y-8">
-                                        <div className='flex'>
-                                            <Avatar className="w-8 h-8 rounded-full">
-                                                <AvatarImage src={blog?.createdBy.image ?? ""} />
-                                                <AvatarFallback>U</AvatarFallback>
-                                            </Avatar>
-                                            <div className='flex flex-col ml-2 w-full gap-2'>
-                                            <div className='border p-2 rounded-md w-full'>
-                                                <p className="font-semibold mb-4">Chibueze Onyekpere <span className="text-gray-600 text-sm">• Jul 21</span></p>
-                                                <p className="text-gray-800 mb-4">I really love this Google IDX concept. Great article</p>
-                                            </div>
-                                            <div className='flex text-xs items-center gap-4 text-gray-700'>
-                                                <div className=''>
-                                                    <FavoriteBorderOutlined className='size-5'/>
-                                                    <span className="ml-1">2 likes</span>
-                                                </div>
-                                                <div className=''>
-                                                    <ModeCommentOutlined className='size-5'/>
-                                                    <span className="ml-1">Reply</span>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
+                                        {blog?.comments.map((comment) => (
+                                            <Comment
+                                                key={comment.id}
+                                                author={{name: comment.createdBy.fullName ?? "", image: comment.createdBy.image ?? ""}}
+                                                date={new Date(comment.createdAt).toLocaleDateString()}
+                                                content={comment.content}
+                                                likes={0}
+                                            />
+                                        ))}
                                         <div className='flex'>
                                             <Avatar className="w-8 h-8 rounded-full">
                                                 <AvatarImage src={blog?.createdBy.image ?? ""} />
@@ -225,7 +225,9 @@ export default function Component() {
                                         <AvatarImage src={blog?.createdBy.image ?? ""}/>
                                         <AvatarFallback>{blog?.createdBy.name}</AvatarFallback>
                                     </Avatar>
-                                    <h2 className="text-xl font-bold -mt-2 ml-2">{blog?.createdBy.name}</h2>
+                                    <Link href={"/user/" + blog?.createdBy.id} passHref>
+                                    <h2 className="text-xl font-bold -mt-2 ml-2 hover:text-indigo-700">{blog?.createdBy.name}</h2>
+                                    </Link>
                                     </div>
                                     <Button className="bg-indigo-600 text-white hover:bg-indigo-700 w-full">
                                         Follow

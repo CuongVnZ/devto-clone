@@ -43,7 +43,7 @@ export default function Component({ blog } : { blog: Blog }) {
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
           <div>
-            <p className="text-sm font-semibold">{blog.createdBy.fullName}</p>
+            <p className="text-sm font-semibold hover:text-indigo-700">{blog.createdBy.fullName}</p>
             <p className="text-xs text-muted-foreground">Jul 16 (10 hours ago)</p>
           </div>
         </Link>

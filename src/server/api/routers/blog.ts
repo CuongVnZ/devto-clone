@@ -59,6 +59,9 @@ export const blogRouter = createTRPCRouter({
     return ctx.db.blog.findUnique({
       where: { slug: input },
       include: {
+        comments: {
+          include: { createdBy: true }
+        },
         _count: {
           select: { 
             likes: true,
