@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable react/no-unescaped-entities */
 import { Card, CardContent } from "~/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { BookmarkBorderOutlined, ModeCommentOutlined } from '@mui/icons-material';
@@ -9,7 +7,7 @@ import type { Prisma } from "@prisma/client";
 type Blog = Prisma.BlogGetPayload<{
   select: {
     id: true,
-    cover: true,
+    coverExtension: true,
     title: true,
     slug: true,
     tags: true,
@@ -29,9 +27,9 @@ export default function Component({ blog } : { blog: Blog }) {
         <>
     <Card className="col-span-1 bg-white border rounded-lg overflow-hidden mb-6">
       {
-        blog.cover && (
+        blog.coverExtension && (
           <img 
-            src={blog.cover} 
+            src={"https://devto-clone.s3.amazonaws.com/cover/" + blog.id + "." + blog.coverExtension} 
             alt="Cover Image"
             className="w-full max-h-60 object-cover" 
           />

@@ -4,7 +4,7 @@ import { api } from "~/utils/api";
 import { useRouter } from 'next/router';
 import { uploadCover } from '~/services/s3';
 import ErrorPage from 'next/error';
-import BlogEditor from '~/components/BlogEditor'; // Import the new BlogEditor component
+import BlogEditor from '~/components/BlogEditor';
 import { useState } from 'react';
 
 export default function Component() {
