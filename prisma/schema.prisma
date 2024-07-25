@@ -53,17 +53,19 @@ model Comment {
 }
 
 model Blog {
-    id          String    @id @default(uuid())
-    slug        String    @unique
-    createdById String
-    cover       String    @default("")
-    title       String
-    content     String
-    tags        String[]  @default([])
-    status      String    @default("draft")
-    comments    Comment[]
-    likes       Like[]
-    createdAt   DateTime  @default(now())
+    id             String    @id @default(uuid())
+    slug           String    @unique
+    createdById    String
+    coverExtension String    @default("")
+    title          String
+    content        String
+    tags           String[]  @default([])
+    status         String    @default("draft")
+    comments       Comment[]
+    likes          Like[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
 
     createdBy User @relation(fields: [createdById], references: [id])
 

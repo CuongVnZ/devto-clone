@@ -1,17 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { TextField, Chip } from '@mui/material';
+import { set } from 'zod';
 
 interface TagsInputProps {
   onTagsChange: (tags: string[]) => void;
+  initialTags?: string[];
 }
 
-const TagsInput: React.FC<TagsInputProps> = ({ onTagsChange }) => {
-  const [tags, setTags] = useState<string[]>([]);
+const TagsInput: React.FC<TagsInputProps> = ({ 
+  initialTags = [],
+  onTagsChange
+}) => {
+  const [tags, setTags] = useState<string[]>(initialTags);
   const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
     onTagsChange(tags);
   }, [tags, onTagsChange]);
+
+  useEffect(() => {
+    setTags(initialTags);
+  }, [initialTags]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -33,30 +42,29 @@ const TagsInput: React.FC<TagsInputProps> = ({ onTagsChange }) => {
   };
 
   return (
-      <TextField
-        className="w-full border border-gray-300 rounded-lg"
-        fullWidth
-        variant="outlined"
-        placeholder="Enter tags..."
-        value={inputValue}
-        onChange={handleInputChange}
-        onKeyDown={handleInputKeyDown}
-        InputProps={{
-          startAdornment: (
-            <div className="flex gap-1 mr-2">
-              {tags.map((tag) => (
-                <Chip
-                  key={tag}
-                  label={`#${tag}`}
-                  onDelete={() => handleDeleteTag(tag)}
-                  // color="primary"
-                  size="small"
-                />
-              ))}
-            </div>
-          ),
-        }}
-      />
+    <TextField
+      className="w-full border border-gray-300 rounded-lg"
+      fullWidth
+      variant="outlined"
+      placeholder="Enter tags..."
+      value={inputValue}
+      onChange={handleInputChange}
+      onKeyDown={handleInputKeyDown}
+      InputProps={{
+        startAdornment: (
+          <div className="flex gap-1 mr-2">
+            {tags.map((tag) => (
+              <Chip
+                key={tag}
+                label={`#${tag}`}
+                onDelete={() => handleDeleteTag(tag)}
+                size="small"
+              />
+            ))}
+          </div>
+        ),
+      }}
+    />
   );
 };
 

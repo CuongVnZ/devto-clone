@@ -9,8 +9,8 @@ import {
 
 export const blogRouter = createTRPCRouter({
   create: protectedProcedure
-    .input(z.object({ title: z.string(), content: z.string(), tags: z.array(z.string()), cover: z.string() }))
-    .mutation(async ({ ctx, input: { title, content, tags, cover } }) => {
+    .input(z.object({ title: z.string(), content: z.string(), tags: z.array(z.string()), coverExtension: z.string() }))
+    .mutation(async ({ ctx, input: { title, content, tags, coverExtension } }) => {
       // regenerate slug if title is changed
       let slug = slugify(title.toLowerCase());
       // check if slug is unique
@@ -25,7 +25,7 @@ export const blogRouter = createTRPCRouter({
         data: { 
           title,
           tags,
-          cover,
+          coverExtension,
           content,
           slug,
           createdBy: { connect: { id: ctx.session.user.id } }, 
@@ -37,7 +37,7 @@ export const blogRouter = createTRPCRouter({
     return ctx.db.blog.findMany({
       select: {
         id: true,
-        cover: true,
+        coverExtension: true,
         title: true,
         slug: true,
         tags: true,
@@ -53,11 +53,29 @@ export const blogRouter = createTRPCRouter({
     });
   }),
 
-  getById: publicProcedure
+  getBySlug: publicProcedure
+  .input(z.string())
+  .query(async ({ ctx, input }) => {
+    return ctx.db.blog.findUnique({
+      where: { slug: input },
+      include: {
+        _count: {
+          select: { 
+            likes: true,
+            comments: true,
+          }
+        },
+        createdBy: true 
+      },
+    });
+  }),
+  
+  getById: protectedProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
+      console.log("input", input);
       return ctx.db.blog.findUnique({
-        where: { slug: input },
+        where: { id: input },
         include: {
           _count: {
             select: { 
@@ -80,21 +98,21 @@ export const blogRouter = createTRPCRouter({
     }),
     
   update: protectedProcedure
-    .input(z.object({ id: z.string(), title: z.string(), content: z.string() }))
-    .mutation(async ({ ctx, input: { id, title, content } }) => {
-      // regenerate slug if title is changed
-      let slug = slugify(title);
-      // check if slug is unique
-      const existingBlog = await ctx.db.blog.findFirst({ where: { slug } });
-      if (existingBlog && existingBlog.id !== id) {
-        // add a random string (4 chars) to the slug to make it unique
-        const randomString = Math.random().toString(36).substring(2, 6);
-        slug = `${slug}-${randomString}`;
-      }
+    .input(z.object({ id: z.string(), title: z.string(), tags: z.array(z.string()), content: z.string(), coverExtension: z.string() }))
+    .mutation(async ({ ctx, input: { id, title, tags, content, coverExtension } }) => {
+      // // regenerate slug if title is changed
+      // let slug = slugify(title);
+      // // check if slug is unique
+      // const existingBlog = await ctx.db.blog.findFirst({ where: { slug } });
+      // if (existingBlog && existingBlog.id !== id) {
+      //   // add a random string (4 chars) to the slug to make it unique
+      //   const randomString = Math.random().toString(36).substring(2, 6);
+      //   slug = `${slug}-${randomString}`;
+      // }
 
       return ctx.db.blog.update({
         where: { id },
-        data: { title, content, slug },
+        data: { title, content, tags, coverExtension, updatedAt: new Date()},
       });
     }),
 

@@ -21,10 +21,11 @@ export default function Component() {
     const id = router.query.id as string;
     
     const commentMutation = api.comment.create.useMutation();
-    const { data: blog, isSuccess } = api.blog.getById.useQuery(id);
+    const { data: blog, isSuccess } = api.blog.getBySlug.useQuery(id);
 
     const [date, setDate] = useState("July 16")
     const [comment, setComment] = useState("")
+    const [comments, setComments] = useState([])
 
     useEffect(() => {
         if (blog && isSuccess) {
@@ -35,7 +36,8 @@ export default function Component() {
 
     const handleComment = () => {
         if (blog && comment.length > 0) {
-            commentMutation.mutate({ content: comment, blogId: blog.id })
+            const res = commentMutation.mutate({ content: comment, blogId: blog.id })
+            // setComments([...comments, res])
             setComment("")
         }
     }
@@ -67,9 +69,8 @@ export default function Component() {
                         {/* Main Content */}
                         <div className="flex-grow w-9/12 md:ml-16">
                             <div className="bg-white rounded-lg border mt-2">
-                                {/* <img src={blog && "https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fnuy8zc5v6fsfl2ehi4g8.gif"} alt="Cover Image" className="w-full h-72 object-cover rounded-t-lg" /> */}
-                                {blog?.cover && <img src={blog.cover} alt="Cover Image" className="w-full h-72 object-cover rounded-t-lg" />}
-                                <div className='px-12 pt-12'>                                    
+                                {blog && <img src={"https://devto-clone.s3.amazonaws.com/cover/" + blog.id + "." + blog.coverExtension} alt="Cover Image" className="w-full h-72 object-cover rounded-t-lg" />}
+                                <div className='px-12 pt-8'>                                    
                                     <div className="flex items-center mb-4 justify-between">
                                         <div className='flex'>
                                             <Avatar className="w-10 h-10 rounded-full">
@@ -90,9 +91,11 @@ export default function Component() {
                                         <>
                                         <div className='flex'>
                                             <div className="flex ml-2 bg-amber-50 p-1 border border-amber-100 rounded-lg text-gray-700">
-                                                <button className="text-sm hover:bg-gray-400 hover:bg-opacity-20 p-2 rounded-sm">
-                                                    <span>Edit</span>
-                                                </button>
+                                                <Link href={"/edit/" + blog?.id}>
+                                                    <button className="text-sm hover:bg-gray-400 hover:bg-opacity-20 p-2 rounded-sm">
+                                                        <span>Edit</span>
+                                                    </button>
+                                                </Link>
                                                 <button className="text-sm hover:bg-gray-400 hover:bg-opacity-20 p-2 rounded-sm">
                                                     <span>Manage</span>
                                                 </button>
