@@ -44,6 +44,8 @@ export default function Component() {
                 <div className="mx-auto">
                     <h1 className="text-3xl font-bold my-4">Create a new blog</h1>
                     <BlogEditor
+                        initialTags={[]}
+                        initialContent='**Hello world!!!**'
                         onSubmit={handleSubmit}
                         submitButtonText="Create"
                         pending={pending}

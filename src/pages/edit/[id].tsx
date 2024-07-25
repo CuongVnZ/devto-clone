@@ -44,7 +44,10 @@ export default function Component() {
         setPending(true);
         setSelectedFile(data.coverFile);
         const { coverFile, ...rest } = data;
-        const coverExtension = coverFile ? coverFile.name.split('.').pop() ?? "" : "";
+        let coverExtension = blog?.coverExtension ?? "";
+        if(coverFile) {
+            coverExtension = coverFile.name.split('.').pop() ?? "";
+        }
         mutation.mutate({ id, ...rest, coverExtension });
     }
 

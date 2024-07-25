@@ -18,7 +18,7 @@ interface BlogEditorProps {
 
 const BlogEditor: React.FC<BlogEditorProps> = ({
   initialTitle = "",
-  initialContent = "**Hello world!!!**",
+  initialContent = "",
   initialTags = [],
   initialCover = "",
   onSubmit,

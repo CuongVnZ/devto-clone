@@ -15,12 +15,12 @@ const TagsInput: React.FC<TagsInputProps> = ({
   const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
-    onTagsChange(tags);
-  }, [tags, onTagsChange]);
-
-  useEffect(() => {
     setTags(initialTags);
   }, [initialTags]);
+
+  useEffect(() => {
+    onTagsChange(tags);
+  }, [tags, onTagsChange]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);

@@ -141,13 +141,13 @@ export default function Component() {
                                     </div>
                                     <h1 className="text-3xl md:text-5xl font-bold mb-4">{blog?.title ?? <Skeleton />}</h1>
                                     {/* Hashtag line */}
-                                    {blog?.createdBy.name ? <>
-                                    <div className="flex space-x-2">
-                                        <button className="p-1 text-gray-600 text-sm rounded-lg hover:bg-yellow-200">#javascript</button>
-                                        <button className="text-gray-600 text-sm">#webdev</button>
-                                        <button className="text-gray-600 text-sm">#programming</button>
-                                    </div>
-                                    </>: <Skeleton />}
+                                    {blog 
+                                    ?
+                                    blog.tags.map(tag => (
+                                        <button key={tag} className="p-1 text-gray-600 text-sm rounded-lg hover:bg-gray-200">#{tag}</button>
+                                    ))
+                                    : <Skeleton />
+                                    }
                                 </div>
                                 <div className='px-8'>
                                     {blog
