@@ -1,29 +1,83 @@
-# Create T3 App
+# Dev.to - Clone Project Plan
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Project Setup
+- [x] Initialize project using create-t3-app stack
+- [x] Set up version control with GitHub
+- [x] Deploy initial application to Vercel
+- [x] Set up Prisma with Railway for SQL database storage
+- [x] Configure NextAuth for authentication
+- [x] Set up AWS S3 for file uploads - https://devto-clone.s3.amazonaws.com/
 
-## What's next? How do I make an app with this?
+## Week 1
+### Authentication
+- [x] Implement user login/signup with credentials
+- [x] Implement social login (Google)
+- [x] Implement social login (Discord)
+- [x] Implement user logout
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+### Blog Creation Page
+- [x] Design and implement initial layout for blog creation page
+- [x] Create basic form for blog post creation (title, tags, content)
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+### Deployment
+- [x] Ensure application is accessible via public Vercel link - devto-clone-ed.vercel.app
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Week 2
+### AWS S3 Setup
+- [x] Create and configure AWS S3 bucket
+- [x] Implement file upload functionality to S3
 
-## Learn More
+### Blog Post CRUD Operations
+- [x] Create tRPC routes for blog post operations
+- [x] Implement create blog post functionality
+- [x] Implement read blog post functionality
+- [ ] Implement delete blog post functionality (for post owners only)
+- [x] Create blog post page (/new)
+- [x] Display list of blog posts on home page
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Week 3
+### User Profile
+- [x] Create user profile page (/user/[userId])
+- [x] Implement profile information editing
+  - [x] Add bio field
+  - [x] Implement profile picture upload to AWS S3
+  - [x] Display list of user's blog posts on profile
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+### Search Functionality
+- [ ] Implement blog search box on home page
+- [ ] Create search functionality to find blogs by title
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Week 4
+### Blog Post Management
+- [ ] Implement edit functionality for blog posts
+- [ ] Add hide/archive feature for blog posts
+- [ ] Create indicator for hidden/archived posts
 
-## How do I deploy this?
+### UI Improvements
+- [ ] Ensure responsive design across devices
+- [ ] Refine user experience and overall design
+- [ ] Implement consistent styling using Tailwind CSS
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Week 5
+### Additional Feature (Choose One)
+- [ ] Implement commenting system
+  - [x] Allow users to leave comments on blog posts
+  - [ ] Add like functionality for comments
+  - [ ] Implement comment reply feature
+- [ ] OR Implement tags and categories
+  - [ ] Allow users to add tags/categories to blog posts
+  - [ ] Create search functionality for tags/categories
+- [x] OR Implement Markdown support
+  - [x] Add Markdown parsing for blog post content
+  - [x] Create Markdown preview feature in blog editor
+
+## Ongoing Tasks
+- [x] Conduct weekly check-ins (every Thursday)
+- [ ] Update project documentation as needed
+- [x] Perform code reviews and refactoring
+- [x] Test application thoroughly on different devices and browsers
+
+## Final Steps
+- [ ] Conduct final testing and bug fixes
+- [ ] Prepare project handover documentation
+- [ ] Schedule final project review meeting
