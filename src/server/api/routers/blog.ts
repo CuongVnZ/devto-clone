@@ -60,8 +60,8 @@ export const blogRouter = createTRPCRouter({
       where: { slug: input },
       include: {
         comments: {
-          include: { createdBy: true }
-
+          include: { createdBy: true },
+          orderBy: { createdAt: 'desc' }
         },
         _count: {
           select: { 
