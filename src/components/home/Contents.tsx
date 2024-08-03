@@ -45,7 +45,7 @@ export default function Component() {
           </div>
           <div className="flex justify-between items-center text-muted-foreground">
             <div className="flex items-center gap-2">
-              <span className="text-sm">❤️‍🔥🤖🎶🤹</span>
+              <span className="text-sm">❤️‍🔥</span>
               <span className="text-sm pr-5">22 Reactions</span>
               <ModeCommentOutlined />
               <span className="text-sm">1 Comment</span>
