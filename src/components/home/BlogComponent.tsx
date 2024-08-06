@@ -20,8 +20,19 @@ type Blog = Prisma.BlogGetPayload<{
         comments: true,
       } 
     },
+    comments: {
+      include: {
+        createdBy: true
+      }
+    }
   }
 }>
+
+type Comment = Prisma.CommentGetPayload<{
+  include: {
+    createdBy: true
+  }
+}>;
 
 export default function Component({ blog } : { blog?: Blog }) {
     if (!blog) {
@@ -55,7 +66,7 @@ export default function Component({ blog } : { blog?: Blog }) {
                     </Avatar>
                     <div>
                         <p className="text-sm font-semibold hover:text-indigo-700">{blog.createdBy.fullName}</p>
-                        <p className="text-xs text-muted-foreground">Jul 16 (10 hours ago)</p>
+                        <p className="text-xs text-muted-foreground">{blog.createdAt.toLocaleDateString()}</p>
                     </div>
                 </Link>
                 </div>
@@ -64,10 +75,9 @@ export default function Component({ blog } : { blog?: Blog }) {
                         <span className="text-2xl font-bold hover:text-indigo-700">{blog.title}</span>
                     </Link>
                     <div className="flex flex-wrap gap-4 mt-2 mb-4 text-gray-700">
-                        <span className="text-sm">#webdev</span>
-                        <span className="text-sm">#python</span>
-                        <span className="text-sm">#programming</span>
-                        <span className="text-sm">#ai</span>
+                        {blog.tags.map((tag, index) => (
+                            <span key={index} className="text-sm">#{tag}</span>
+                        ))}
                     </div>
                     <div className="flex justify-between items-center text-gray-700">
                         <div className="flex items-center gap-2 text-sm">
@@ -84,21 +94,11 @@ export default function Component({ blog } : { blog?: Blog }) {
                 </div>
                 
                 <div className="flex mt-4">
-                    <Avatar className="w-8 h-8 rounded-full">
-                        <AvatarImage src="https://i.pravatar.cc/50?u=commenter" />
-                        <AvatarFallback>F</AvatarFallback>
-                    </Avatar>
-                    <div className="ml-2 p-4 bg-gray-50 rounded-lg">
-                        <div className="flex items-center gap-2 mb-2">
-                            <div className="flex justify-center items-center">
-                                <p className="text-sm font-semibold">Florian Rappl</p>
-                                <p className="text-sm text-muted-foreground ml-2">2 hours ago</p>
-                            </div>
-                        </div>
-                        <p className="text-sm">
-                            While the micro scheme is fine, it lacks a proper repository structuring. As an example, not aggregating the source code in a <code>src</code> directory is a huge misstep. You might want to use TypeScript or some other tooling (e.g., a bundler) to process your code for performance benefits.
-                        </p>
-                    </div>
+                    {blog.comments[0] && (
+                        <Comment
+                            comment={blog.comments[0]}
+                        />
+                    )}
                 </div>
 
             </CardContent>
@@ -127,5 +127,23 @@ function BlogSkeleton() {
                 </div>
             </CardContent>
         </Card>
+    );
+}
+
+function Comment({ comment }: { comment: Comment }) {
+    return (
+        <div className="flex gap-4 p-4 bg-gray-50 rounded-lg w-full">
+            <Avatar className="w-8 h-8 rounded-full">
+                <AvatarImage src={comment.createdBy.image ?? ""} />
+                <AvatarFallback>U</AvatarFallback>
+            </Avatar>
+            <div className="flex-grow">
+                <div className="flex justify-between items-center mb-1">
+                    <p className="text-sm font-semibold">{comment.createdBy.fullName}</p>
+                    <p className="text-xs text-muted-foreground">{comment.createdAt.toLocaleDateString()}</p>
+                </div>
+                <p className="text-sm">{comment.content}</p>
+            </div>
+        </div>
     );
 }

@@ -83,19 +83,3 @@ export default function Component() {
     </div>
   );
 }
-
-function Comment({ avatarSrc, author, time, text }: { avatarSrc: string, author: string, time: string, text: string }) {
-  return (
-    <div className="flex gap-4 p-4 bg-gray-100 rounded-lg">
-      <Avatar className="w-8 h-8 rounded-full">
-        <AvatarImage src={avatarSrc} />
-        <AvatarFallback>{author.charAt(0)}</AvatarFallback>
-      </Avatar>
-      <div>
-        <p className="text-sm font-semibold">{author}</p>
-        <p className="text-xs text-muted-foreground mb-2">{time}</p>
-        <p className="text-sm">{text}</p>
-      </div>
-    </div>
-  );
-}
