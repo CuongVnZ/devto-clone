@@ -40,8 +40,8 @@ export default function Component() {
     return (
         <>
             <Header />
-            <div className="md:container bg-gray-100 min-h-screen py-14">
-                <div className="mx-auto">
+            <div className="bg-gray-100 min-h-screen py-14">
+                <div className="md:container mx-auto">
                     <h1 className="text-3xl font-bold my-4">Create a new blog</h1>
                     <BlogEditor
                         initialTags={[]}

@@ -16,7 +16,7 @@ export default function Component() {
 
   return (
     <div className="flex-grow py-4 mx-2 w-8/12">
-    <Card className="col-span-1 bg-white border shadow-sm rounded-lg overflow-hidden mb-6">
+    {/* <Card className="col-span-1 bg-white border shadow-sm rounded-lg overflow-hidden mb-6">
       <img 
         src="https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fnuy8zc5v6fsfl2ehi4g8.gif" 
         alt="Cover Image"
@@ -56,7 +56,6 @@ export default function Component() {
             </div>
           </div>
         </div>
-          
         <div className="mt-4 p-4 bg-gray-50 rounded-lg">
           <div className="flex items-center gap-2 mb-2">
             <Avatar className="w-8 h-8 rounded-full">
@@ -73,12 +72,12 @@ export default function Component() {
           </p>
         </div>
       </CardContent>
-    </Card>
+    </Card> */}
 
     {
-      blogs?.map(blog => (
+      blogs ? blogs.map(blog => (
         <BlogComponent key={blog.id} blog={blog} />
-      ))
+      )) : <BlogComponent />
     }
 
     </div>

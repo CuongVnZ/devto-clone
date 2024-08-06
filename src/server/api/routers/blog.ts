@@ -47,8 +47,12 @@ export const blogRouter = createTRPCRouter({
           select: { 
             likes: true,
             comments: true,
-          } 
+          }
         },
+        comments: {
+          take: 1,
+          orderBy: { createdAt: 'desc' }
+        }
       }
     });
   }),

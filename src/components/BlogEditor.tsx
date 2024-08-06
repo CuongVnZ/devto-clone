@@ -20,7 +20,7 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
   initialTitle = "",
   initialContent = "",
   initialTags = [],
-  initialCover = "",
+  initialCover = "https://placehold.co/600x300",
   onSubmit,
   pending = false,
   submitButtonText
@@ -36,6 +36,7 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
     setContent(initialContent);
     setTags(initialTags);
     setCover(initialCover);
+    console.log(initialCover);
   }, [initialTitle, initialContent, initialTags, initialCover]);  
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +54,7 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
   return (
     <div className="bg-white p-4 rounded-lg border">
       <div className="mt-2 flex gap-3 items-center">
-        <img className="w-[40%] rounded-lg" src={cover || "https://placehold.co/600x300"} alt="Cover" />
+        <img className="w-[40%] rounded-lg" src={cover ?? "https://placehold.co/600x300"} alt="Cover" />
         <div>
           <Label>Add your cover image</Label>
           <Input

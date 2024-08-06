@@ -19,8 +19,8 @@ export default function Component() {
     const id = router.query.id as string;
 
     const [ {data: profile} , {data: blogs} ] = api.useQueries((api) => [
-        api.user.getById({id}, {enabled: user !== undefined}),
-        api.blog.getByUser(id, {enabled: user !== undefined})
+        api.user.getById({id}),
+        api.blog.getByUser(id)
     ])
 
     if (profile?.name == null) {
@@ -33,7 +33,7 @@ export default function Component() {
             <div className="bg-gray-100 min-h-screen pt-14">
                 <div className="bg-black h-36"></div>
                 {/* Profile section */}
-                <div className="md:w-[80%] mx-auto">
+                <div className="max-w-5xl mx-auto">
                     <div className="relative -mt-16">
                         <div className="bg-white p-8 rounded-lg border h-60">
                             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
