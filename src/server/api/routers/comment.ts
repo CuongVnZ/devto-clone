@@ -19,23 +19,19 @@ export const commentRouter = createTRPCRouter({
       });
     }),
 
-  getById: publicProcedure
-    .input(z.string())
-    .query(async ({ ctx, input }) => {
-      return ctx.db.blog.findUnique({
-        where: { id: input },
-        include: { createdBy: true },
-      });
-    }),
+  getById: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    return ctx.db.blog.findUnique({
+      where: { id: input },
+      include: { createdBy: true },
+    });
+  }),
 
-  getByUser: publicProcedure
-    .input(z.string())
-    .query(async ({ ctx, input }) => {
-      return ctx.db.blog.findMany({
-        where: { createdBy: { id: input } },
-        include: { createdBy: true },
-      });
-    }),
+  getByUser: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    return ctx.db.blog.findMany({
+      where: { createdBy: { id: input } },
+      include: { createdBy: true },
+    });
+  }),
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";

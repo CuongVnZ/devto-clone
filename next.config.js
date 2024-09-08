@@ -18,6 +18,14 @@ const config = {
     defaultLocale: "en",
   },
   transpilePackages: ["geist"],
+
+  images: {
+    remotePatterns: [
+      {
+        hostname: "devto-clone.s3.amazonaws.com",
+      },
+    ],
+  },
 };
 
 export default config;

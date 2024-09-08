@@ -73,7 +73,7 @@ export default function Component() {
             initialContent={blog?.content}
             initialTags={blog?.tags}
             initialCover={
-              blog?.coverExtension && blog.coverExtension.trim() !== ''
+              blog?.coverExtension && blog.coverExtension.trim() !== ""
                 ? "https://devto-clone.s3.amazonaws.com/cover/" +
                   blog?.id +
                   "." +

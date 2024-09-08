@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import Comment from "~/components/blog/Comment";
+import Image from "next/image";
 
 interface CommentType {
   id: string;
@@ -95,7 +96,7 @@ export default function Component() {
             <div className="flex-grow w-9/12 md:ml-16">
               <div className="bg-white rounded-lg border mt-2">
                 {blog?.coverExtension && (
-                  <img
+                  <Image
                     src={
                       "https://devto-clone.s3.amazonaws.com/cover/" +
                       blog.id +
@@ -103,6 +104,8 @@ export default function Component() {
                       blog.coverExtension
                     }
                     alt="Cover Image"
+                    width={1200}
+                    height={630}
                     className="w-full h-72 object-cover rounded-t-lg"
                   />
                 )}
@@ -222,7 +225,7 @@ export default function Component() {
                   ) : (
                     <Skeleton
                       variant="rectangular"
-                      className="mx-4"
+                      className="mx-4 mb-8"
                       height="40vh"
                     />
                   )}

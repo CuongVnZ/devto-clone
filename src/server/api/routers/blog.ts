@@ -9,29 +9,38 @@ import {
 
 export const blogRouter = createTRPCRouter({
   create: protectedProcedure
-    .input(z.object({ title: z.string(), content: z.string(), tags: z.array(z.string()), coverExtension: z.string() }))
-    .mutation(async ({ ctx, input: { title, content, tags, coverExtension } }) => {
-      // regenerate slug if title is changed
-      let slug = slugify(title.toLowerCase());
-      // check if slug is unique
-      const existingBlog = await ctx.db.blog.findFirst({ where: { slug } });
-      if (existingBlog) {
-        // add a random string (4 chars) to the slug to make it unique
-        const randomString = Math.random().toString(36).substring(2, 6);
-        slug = `${slug}-${randomString}`;
-      }
+    .input(
+      z.object({
+        title: z.string(),
+        content: z.string(),
+        tags: z.array(z.string()),
+        coverExtension: z.string(),
+      }),
+    )
+    .mutation(
+      async ({ ctx, input: { title, content, tags, coverExtension } }) => {
+        // regenerate slug if title is changed
+        let slug = slugify(title.toLowerCase());
+        // check if slug is unique
+        const existingBlog = await ctx.db.blog.findFirst({ where: { slug } });
+        if (existingBlog) {
+          // add a random string (4 chars) to the slug to make it unique
+          const randomString = Math.random().toString(36).substring(2, 6);
+          slug = `${slug}-${randomString}`;
+        }
 
-      return ctx.db.blog.create({
-        data: { 
-          title,
-          tags,
-          coverExtension,
-          content,
-          slug,
-          createdBy: { connect: { id: ctx.session.user.id } }, 
-        },
-      });
-    }),
+        return ctx.db.blog.create({
+          data: {
+            title,
+            tags,
+            coverExtension,
+            content,
+            slug,
+            createdBy: { connect: { id: ctx.session.user.id } },
+          },
+        });
+      },
+    ),
 
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.db.blog.findMany({
@@ -41,80 +50,86 @@ export const blogRouter = createTRPCRouter({
         title: true,
         slug: true,
         tags: true,
-        createdBy: { select: { id: true, name: true, fullName: true, image: true } },
+        createdBy: {
+          select: { id: true, name: true, fullName: true, image: true },
+        },
         createdAt: true,
-        _count: { 
-          select: { 
+        _count: {
+          select: {
             likes: true,
             comments: true,
-          }
+          },
         },
         comments: {
           take: 1,
-          orderBy: { createdAt: 'desc' },
-          include: { createdBy: true }
-        }
-      }
+          orderBy: { createdAt: "desc" },
+          include: { createdBy: true },
+        },
+      },
     });
   }),
 
-  getBySlug: publicProcedure
-  .input(z.string())
-  .query(async ({ ctx, input }) => {
+  getBySlug: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
     return ctx.db.blog.findUnique({
       where: { slug: input },
       include: {
         comments: {
           include: { createdBy: true },
-          orderBy: { createdAt: 'desc' }
+          orderBy: { createdAt: "desc" },
         },
         _count: {
-          select: { 
+          select: {
             likes: true,
             comments: true,
-          }
+          },
         },
-        createdBy: true 
+        createdBy: true,
       },
     });
   }),
-  
-  getById: publicProcedure
-    .input(z.string())
-    .query(async ({ ctx, input }) => {
-      console.log("input", input);
-      return ctx.db.blog.findUnique({
-        where: { id: input }
-      });
-    }),
 
-  getByUser: publicProcedure
-    .input(z.string())
-    .query(async ({ ctx, input }) => {
-      return ctx.db.blog.findMany({
-        where: { createdBy: { id: input } },
-        include: { createdBy: true },
-      });
-    }),
-    
+  getById: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    console.log("input", input);
+    return ctx.db.blog.findUnique({
+      where: { id: input },
+    });
+  }),
+
+  getByUser: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    return ctx.db.blog.findMany({
+      where: { createdBy: { id: input } },
+      include: { createdBy: true },
+    });
+  }),
+
   update: protectedProcedure
-    .input(z.object({ id: z.string(), title: z.string(), tags: z.array(z.string()), content: z.string(), coverExtension: z.string() }))
-    .mutation(async ({ ctx, input: { id, title, tags, content, coverExtension } }) => {
-      // // regenerate slug if title is changed
-      // let slug = slugify(title);
-      // // check if slug is unique
-      // const existingBlog = await ctx.db.blog.findFirst({ where: { slug } });
-      // if (existingBlog && existingBlog.id !== id) {
-      //   // add a random string (4 chars) to the slug to make it unique
-      //   const randomString = Math.random().toString(36).substring(2, 6);
-      //   slug = `${slug}-${randomString}`;
-      // }
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string(),
+        tags: z.array(z.string()),
+        content: z.string(),
+        coverExtension: z.string(),
+      }),
+    )
+    .mutation(
+      async ({ ctx, input: { id, title, tags, content, coverExtension } }) => {
+        // // regenerate slug if title is changed
+        // let slug = slugify(title);
+        // // check if slug is unique
+        // const existingBlog = await ctx.db.blog.findFirst({ where: { slug } });
+        // if (existingBlog && existingBlog.id !== id) {
+        //   // add a random string (4 chars) to the slug to make it unique
+        //   const randomString = Math.random().toString(36).substring(2, 6);
+        //   slug = `${slug}-${randomString}`;
+        // }
 
-      return ctx.db.blog.update({
-        where: { id },
-        data: { title, content, tags, coverExtension, updatedAt: new Date()},
-      });
-    }),
+        return ctx.db.blog.update({
+          where: { id },
+          data: { title, content, tags, coverExtension, updatedAt: new Date() },
+        });
+      },
+    ),
 
   delete: protectedProcedure
     .input(z.string())

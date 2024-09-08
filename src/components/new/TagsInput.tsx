@@ -1,18 +1,18 @@
-import React, { useState, useEffect, use } from 'react';
-import { TextField, Chip } from '@mui/material';
-import { set } from 'zod';
+import React, { useState, useEffect, use } from "react";
+import { TextField, Chip } from "@mui/material";
+import { set } from "zod";
 
 interface TagsInputProps {
   onTagsChange: (tags: string[]) => void;
   initialTags?: string[];
 }
 
-const TagsInput: React.FC<TagsInputProps> = ({ 
+const TagsInput: React.FC<TagsInputProps> = ({
   initialTags = [],
-  onTagsChange
+  onTagsChange,
 }) => {
   const [tags, setTags] = useState<string[]>(initialTags);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>("");
 
   useEffect(() => {
     setTags(initialTags);
@@ -27,13 +27,13 @@ const TagsInput: React.FC<TagsInputProps> = ({
   };
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === ' ' && inputValue.trim() !== '') {
+    if (e.key === " " && inputValue.trim() !== "") {
       e.preventDefault();
       const newTag = inputValue.trim();
       if (!tags.includes(newTag)) {
         setTags([...tags, newTag]);
       }
-      setInputValue('');
+      setInputValue("");
     }
   };
 

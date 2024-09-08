@@ -8,7 +8,6 @@ import {
   protectedProcedure,
 } from "~/server/api/trpc";
 
-
 export const userRouter = createTRPCRouter({
   getById: publicProcedure
     .input(z.object({ id: z.string() }))
@@ -24,15 +23,18 @@ export const userRouter = createTRPCRouter({
           name: true,
           email: true,
           image: true,
-          _count: { 
-            select: { 
-              followers: true, 
-              follows: true, 
-              blogs: true, 
+          _count: {
+            select: {
+              followers: true,
+              follows: true,
+              blogs: true,
               comments: true,
-            } 
+            },
           },
-          followers: currentUserId == null ? undefined : { where: { id: currentUserId } }, // check if current user is following this user
+          followers:
+            currentUserId == null
+              ? undefined
+              : { where: { id: currentUserId } }, // check if current user is following this user
         },
       });
 
@@ -45,10 +47,17 @@ export const userRouter = createTRPCRouter({
     }),
 
   update: protectedProcedure
-    .input(z.object({ fullName: z.string(), name: z.string(), email: z.string(), image: z.string() }))
-    .mutation(async ({ input: { fullName, name, email, image }, ctx }) => {      
+    .input(
+      z.object({
+        fullName: z.string(),
+        name: z.string(),
+        email: z.string(),
+        image: z.string(),
+      }),
+    )
+    .mutation(async ({ input: { fullName, name, email, image }, ctx }) => {
       const userId = ctx.session.user.id;
-      
+
       return ctx.db.user.update({
         where: { id: userId },
         data: { fullName, name, email, image },
@@ -84,7 +93,7 @@ export const userRouter = createTRPCRouter({
       return { addedFollow };
     }),
 
-    delete: protectedProcedure
+  delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ input: { id }, ctx }) => {
       return ctx.db.user.delete({
@@ -92,7 +101,7 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-    getSecretMessage: protectedProcedure.query(() => {
-      return "you can now see this secret message!";
-    }),
+  getSecretMessage: protectedProcedure.query(() => {
+    return "you can now see this secret message!";
+  }),
 });
