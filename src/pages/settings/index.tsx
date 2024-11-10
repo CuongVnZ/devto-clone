@@ -23,7 +23,7 @@ const formSchema = z.object({
   location: z.string().optional(),
   bio: z.string().optional(),
   showEmail: z.boolean().default(false),
-  avatarFile: z.instanceof(File).optional(),
+  avatarFile: z.any().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -70,7 +70,7 @@ export default function Component() {
   const onSubmit = async (data: FormValues) => {
     if (data.avatarFile) {
       const formData = new FormData();
-      formData.append("file", data.avatarFile);
+      formData.append("file", data.avatarFile as File);
       formData.append("folder", "avatar");
 
       const upload = await fetch("/api/upload", {
@@ -82,12 +82,11 @@ export default function Component() {
       data.image = imageUrl;
     }
 
-    const { avatarFile, showEmail, ...updateData } = data;
     mutation.mutate({
-      fullName: updateData.fullName,
-      email: updateData.email,
-      image: updateData.image ?? "",
-      name: updateData.username,
+      fullName: data.fullName,
+      email: data.email,
+      image: data.image ?? "",
+      name: data.username,
     });
   };
 
