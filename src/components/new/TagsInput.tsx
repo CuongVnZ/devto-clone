@@ -1,6 +1,7 @@
-import React, { useState, useEffect, use } from "react";
-import { TextField, Chip } from "@mui/material";
-import { set } from "zod";
+import { X } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Badge } from "~/components/ui/badge";
+import { Input } from "~/components/ui/input";
 
 interface TagsInputProps {
   onTagsChange: (tags: string[]) => void;
@@ -42,29 +43,31 @@ const TagsInput: React.FC<TagsInputProps> = ({
   };
 
   return (
-    <TextField
-      className="w-full border border-gray-300 rounded-lg"
-      fullWidth
-      variant="outlined"
-      placeholder="Enter tags..."
-      value={inputValue}
-      onChange={handleInputChange}
-      onKeyDown={handleInputKeyDown}
-      InputProps={{
-        startAdornment: (
-          <div className="flex gap-1 mr-2">
-            {tags.map((tag) => (
-              <Chip
-                key={tag}
-                label={`#${tag}`}
-                onDelete={() => handleDeleteTag(tag)}
-                size="small"
-              />
-            ))}
-          </div>
-        ),
-      }}
-    />
+    <div className="relative">
+      <div className="absolute top-2 left-2 flex flex-wrap gap-1">
+        {tags.map((tag) => (
+          <Badge
+            key={tag}
+            variant="secondary"
+            className="flex items-center gap-1"
+          >
+            #{tag}
+            <X
+              size={14}
+              className="cursor-pointer hover:text-destructive"
+              onClick={() => handleDeleteTag(tag)}
+            />
+          </Badge>
+        ))}
+      </div>
+      <Input
+        className="pl-2 pt-10"
+        placeholder="Enter tags..."
+        value={inputValue}
+        onChange={handleInputChange}
+        onKeyDown={handleInputKeyDown}
+      />
+    </div>
   );
 };
 
