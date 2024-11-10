@@ -1,20 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useRouter } from "next/router";
-import { api } from "~/utils/api";
 import Header from "~/components/Header";
+import { api } from "~/utils/api";
 // import ErrorPage from "next/error";
 import {
-  CakeOutlined,
-  ModeCommentOutlined,
-  StickyNote2Outlined,
-  TagOutlined,
-} from "@mui/icons-material";
+  CalendarIcon,
+  FileIcon,
+  MessageCircleIcon,
+  TagIcon,
+} from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import BlogCard from "~/components/user/BlogCard";
-import { Button } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { Skeleton } from "@mui/material";
+import { Button } from "~/components/ui/button";
+import { Skeleton } from "~/components/ui/skeleton";
+import BlogCard from "~/components/user/BlogCard";
 
 export default function Component() {
   const session = useSession();
@@ -62,7 +62,7 @@ export default function Component() {
                     <h1 className="text-3xl font-bold">{profile?.fullName}</h1>
                     <p className="text-gray-700 mt-2">{"404 bio not found"}</p>
                     <div className="flex items-center justify-center text-gray-500 mt-8">
-                      <CakeOutlined />
+                      <CalendarIcon />
                       <span className="text-sm">Joined on Jul 16, 2024</span>
                     </div>
                   </>
@@ -81,19 +81,19 @@ export default function Component() {
               <div className="bg-white p-4 rounded-lg border">
                 <ul className="space-y-2 text-md text-muted-foreground">
                   <li className="flex items-center">
-                    <StickyNote2Outlined />
+                    <FileIcon />
                     <span className="ml-2 text-gray-700">
                       {profile?._count.blogs ?? 0} post published
                     </span>
                   </li>
                   <li className="flex items-center">
-                    <ModeCommentOutlined />
+                    <MessageCircleIcon />
                     <span className="ml-2 text-gray-700">
                       {profile?._count.comments ?? 0} comments written
                     </span>
                   </li>
                   <li className="flex items-center">
-                    <TagOutlined />
+                    <TagIcon />
                     <span className="ml-2 text-gray-700">11 tags followed</span>
                   </li>
                 </ul>
@@ -103,7 +103,7 @@ export default function Component() {
               {blogs ? (
                 blogs.map((blog) => <BlogCard key={blog.id} blog={blog} />)
               ) : (
-                <Skeleton variant="rectangular" height="100%" />
+                <Skeleton className="w-full h-60" />
               )}
             </div>
           </div>

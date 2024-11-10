@@ -1,13 +1,10 @@
-import { Card, CardContent } from "~/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import {
-  BookmarkBorderOutlined,
-  ModeCommentOutlined,
-} from "@mui/icons-material";
-import Link from "next/link";
 import type { Prisma } from "@prisma/client";
-import { Skeleton } from "~/components/ui/skeleton"; // Add this import
+import { BookmarkIcon, MessageCircleIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { Card, CardContent } from "~/components/ui/card";
+import { Skeleton } from "~/components/ui/skeleton"; // Add this import
 
 type Blog = Prisma.BlogGetPayload<{
   select: {
@@ -101,7 +98,7 @@ export default function Component({ blog }: { blog?: Blog }) {
               <span className="flex gap-1 pr-5">
                 22 <span className="hidden md:block">Reactions</span>
               </span>
-              <ModeCommentOutlined />
+              <MessageCircleIcon className="" />
               <span className="flex gap-1">
                 {blog._count.comments}{" "}
                 {blog._count.comments > 0 ? (
@@ -113,7 +110,7 @@ export default function Component({ blog }: { blog?: Blog }) {
             </div>
             <div className="flex items-center gap-2 text-sm">
               <span className="">4 min read</span>
-              <BookmarkBorderOutlined className="" />
+              <BookmarkIcon className="" />
             </div>
           </div>
         </div>

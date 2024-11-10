@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import Header from "~/components/Header";
-import LeftSidebar from "../components/home/LeftSidebar";
-import Contents from "../components/home/Contents";
-import RightSidebar from "../components/home/RightSidebar";
+import Contents from "~/components/home/Contents";
+import LeftSidebar from "~/components/home/LeftSidebar";
+import RightSidebar from "~/components/home/RightSidebar";
 
 export default function Component() {
   return (

@@ -1,11 +1,10 @@
 import { useSession } from "next-auth/react";
+import ErrorPage from "next/error";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import BlogEditor from "~/components/BlogEditor";
 import Header from "~/components/Header";
 import { api } from "~/utils/api";
-import { useRouter } from "next/router";
-import { uploadCover } from "~/services/s3";
-import ErrorPage from "next/error";
-import BlogEditor from "~/components/BlogEditor";
-import { useState } from "react";
 
 export default function Component() {
   const session = useSession();
@@ -18,7 +17,16 @@ export default function Component() {
   const mutation = api.blog.create.useMutation({
     onSuccess: async (data) => {
       if (selectedFile) {
-        await uploadCover(data.id, selectedFile);
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        formData.append("folder", "cover");
+
+        const upload = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        const { imageUrl } = (await upload.json()) as { imageUrl: string };
       }
       setPending(false);
       await router.push("/blog/" + data.slug);

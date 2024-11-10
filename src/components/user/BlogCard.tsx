@@ -1,5 +1,5 @@
-import { ModeCommentOutlined } from "@mui/icons-material";
 import { type Prisma } from "@prisma/client";
+import { MessageCircleIcon } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 
@@ -37,7 +37,7 @@ export default function Component({ blog }: { blog: Blog }) {
           <div className="flex items-center gap-2">
             <span className="text-sm">❤️‍🔥</span>
             <span className="text-sm pr-5">5 Reactions</span>
-            <ModeCommentOutlined />
+            <MessageCircleIcon className="w-4 h-4" />
             <span className="text-sm flex gap-1">
               1 <span className="hidden md:block">Comment</span>
             </span>

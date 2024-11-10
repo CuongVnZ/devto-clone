@@ -1,23 +1,19 @@
 /* eslint-disable react/no-unescaped-entities */
-import {
-  BookmarkBorderOutlined,
-  FavoriteBorderOutlined,
-  ModeCommentOutlined,
-} from "@mui/icons-material";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Header from "~/components/Header";
-import { api } from "~/utils/api";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { Skeleton } from "@mui/material";
-import { useSession } from "next-auth/react";
+import { api } from "~/utils/api";
 
-import { MdPreview, MdCatalog } from "md-editor-rt";
+import { BookmarkIcon, HeartIcon, MessageCircleIcon } from "lucide-react";
+import { MdCatalog, MdPreview } from "md-editor-rt";
 import "md-editor-rt/lib/preview.css";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { Button } from "~/components/ui/button";
-import Comment from "~/components/blog/Comment";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Comment from "~/components/blog/Comment";
+import { Button } from "~/components/ui/button";
+import { Skeleton } from "~/components/ui/skeleton";
 
 interface CommentType {
   id: string;
@@ -72,19 +68,19 @@ export default function Component() {
             <div className="w-16 p-2 fixed mt-10 hidden md:block">
               <div className="flex flex-col items-center space-y-4">
                 <button className="p-2 flex flex-col items-center">
-                  <FavoriteBorderOutlined className="text-gray-700 hover:text-red-500" />
+                  <HeartIcon className="text-gray-700 hover:text-red-500" />
                   <span className="mt-2 text-sm text-muted-foreground">
                     {blog?._count.comments ?? <Skeleton />}
                   </span>
                 </button>
                 <button className="p-2 flex flex-col items-center">
-                  <ModeCommentOutlined className="text-gray-700 hover:text-yellow-500" />
+                  <MessageCircleIcon className="text-gray-700 hover:text-yellow-500" />
                   <span className="mt-2 text-sm text-muted-foreground">
                     {blog?._count.comments ?? <Skeleton />}
                   </span>
                 </button>
                 <button className="p-2 flex flex-col items-center">
-                  <BookmarkBorderOutlined className="text-gray-700 hover:text-blue-500" />
+                  <BookmarkIcon className="text-gray-700 hover:text-blue-500" />
                   <span className="mt-2 text-sm text-muted-foreground">
                     {blog?._count.comments ?? <Skeleton />}
                   </span>
@@ -120,14 +116,14 @@ export default function Component() {
                         <Link href={"/user/" + blog?.createdBy.id} passHref>
                           <h2 className="text-md font-semibold hover:text-indigo-700">
                             {blog?.createdBy.fullName ?? (
-                              <Skeleton width={64} />
+                              <Skeleton className="w-24" />
                             )}
                           </h2>
                           <p className="text-gray-600 text-sm">
                             {blog?.createdBy.name ? (
                               date
                             ) : (
-                              <Skeleton width={128} />
+                              <Skeleton className="w-24" />
                             )}
                           </p>
                         </Link>
@@ -188,7 +184,7 @@ export default function Component() {
                         </span>
                       </>
                     ) : (
-                      <Skeleton width={400} />
+                      <Skeleton className="w-40" />
                     )}
                   </div>
                   <h1 className="text-3xl md:text-5xl font-bold mb-4">
@@ -223,11 +219,7 @@ export default function Component() {
                       />
                     </>
                   ) : (
-                    <Skeleton
-                      variant="rectangular"
-                      className="mx-4 mb-8"
-                      height="40vh"
-                    />
+                    <Skeleton className="mx-4 mb-8 h-96" />
                   )}
                 </div>
                 {/* Comment Section */}
@@ -285,11 +277,11 @@ export default function Component() {
                         </div>
                         <div className="flex text-xs items-center gap-4 text-gray-700">
                           <div className="">
-                            <FavoriteBorderOutlined className="size-5" />
+                            <HeartIcon className="size-5" />
                             <span className="ml-1">2 likes</span>
                           </div>
                           <div className="">
-                            <ModeCommentOutlined className="size-5" />
+                            <MessageCircleIcon className="size-5" />
                             <span className="ml-1">Reply</span>
                           </div>
                         </div>

@@ -1,12 +1,10 @@
 import { useSession } from "next-auth/react";
-import Header from "~/components/Header";
-import { api } from "~/utils/api";
 import { useRouter } from "next/router";
-import { uploadCover } from "~/services/s3";
-import ErrorPage from "next/error";
-import BlogEditor from "~/components/BlogEditor";
 import React, { useState } from "react";
-import { Button, IconButton, Snackbar } from "@mui/material";
+import BlogEditor from "~/components/BlogEditor";
+import Header from "~/components/Header";
+import { Button } from "~/components/ui/button";
+import { api } from "~/utils/api";
 
 export default function Component() {
   const session = useSession();
@@ -26,7 +24,16 @@ export default function Component() {
   const mutation = api.blog.update.useMutation({
     onSuccess: async (data) => {
       if (selectedFile) {
-        await uploadCover(data.id, selectedFile);
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        formData.append("folder", "cover");
+
+        const upload = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        const { imageUrl } = (await upload.json()) as { imageUrl: string };
       }
       setPending(false);
       setNotification(true);
@@ -38,7 +45,7 @@ export default function Component() {
     <React.Fragment>
       <Button
         color="secondary"
-        size="small"
+        size="sm"
         onClick={() => router.push("/blog/" + blog?.slug)}
       >
         VIEW
@@ -86,12 +93,12 @@ export default function Component() {
           />
         </div>
       </div>
-      <Snackbar
+      {/* <Snackbar
         open={notification}
         autoHideDuration={3000}
         message="Your blog has been saved!"
         action={action}
-      />
+      /> */}
     </>
   );
 }

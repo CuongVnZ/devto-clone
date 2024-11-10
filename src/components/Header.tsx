@@ -1,12 +1,10 @@
-import { useState } from "react";
-import { Input } from "~/components/ui/input";
-import { Button } from "~/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
-import { type JSX, type SVGProps } from "react";
+import { BellIcon, SearchIcon } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import SearchIcon from "@mui/icons-material/Search";
+import { useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
 
 export default function Component() {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -51,7 +49,7 @@ export default function Component() {
                   className="rounded-full"
                   onClick={() => setIsNotificationOpen(!isNotificationOpen)}
                 >
-                  <NotificationsNoneIcon />
+                  <BellIcon />
                 </Button>
                 {isNotificationOpen && (
                   <div className="absolute right-0 mt-2 w-64 bg-white border rounded-lg shadow-lg p-4">

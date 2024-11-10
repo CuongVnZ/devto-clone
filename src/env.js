@@ -27,6 +27,9 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
 
+    AWS_ACCESS_KEY_ID: z.string(),
+    AWS_SECRET_ACCESS_KEY: z.string(),
+
     POSTGRES_PRISMA_URL: z.string().url(),
     // POSTGRES_URL_NON_POOLING: z.string()
   },
@@ -38,8 +41,6 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
-    NEXT_PUBLIC_AWS_ACCESS_KEY_ID: z.string(),
-    NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY: z.string(),
   },
 
   /**
@@ -56,9 +57,8 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
 
-    NEXT_PUBLIC_AWS_ACCESS_KEY_ID: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
-    NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY:
-      process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
+    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
     POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL,
     // POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING
   },
